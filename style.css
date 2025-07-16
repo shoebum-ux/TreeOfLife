@@ -87,7 +87,7 @@ header h1 {
 /* Audio Toggle Button */
 .audio-toggle {
     position: fixed;
-    top: calc(50% - 200px); /* Align with title position */
+    top: calc(50% - 400px); /* Move 200px higher to align with title */
     right: 30px;
     width: 50px;
     height: 50px;
