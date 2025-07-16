@@ -435,6 +435,9 @@ class RevealPainter {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Initializing Tree of Life Reveal Painter...');
     new RevealPainter();
+    
+    // Initialize audio functionality
+    initializeAudio();
 });
 
 // Add some utility functions
@@ -459,4 +462,105 @@ function downloadRevealedImage() {
     link.download = 'tree-of-life-revealed.png';
     link.href = tempCanvas.toDataURL();
     link.click();
+}
+
+// Audio functionality
+function initializeAudio() {
+    const audio = document.getElementById('backgroundAudio');
+    const audioToggle = document.getElementById('audioToggle');
+    const soundWaves = document.getElementById('soundWaves');
+    
+    let isPlaying = false;
+    
+    // Try to autoplay the audio (may be blocked by browser)
+    const playAudio = async () => {
+        try {
+            await audio.play();
+            isPlaying = true;
+            updateToggleButton();
+            console.log('Background audio started');
+        } catch (error) {
+            console.log('Autoplay was prevented. User interaction required:', error);
+            isPlaying = false;
+            updateToggleButton();
+        }
+    };
+    
+    // Update the toggle button appearance based on play state
+    const updateToggleButton = () => {
+        if (isPlaying) {
+            audioToggle.classList.remove('muted');
+            soundWaves.style.opacity = '1';
+        } else {
+            audioToggle.classList.add('muted');
+            soundWaves.style.opacity = '0.3';
+        }
+    };
+    
+    // Toggle audio on button click
+    audioToggle.addEventListener('click', async () => {
+        if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            console.log('Background audio paused');
+        } else {
+            try {
+                await audio.play();
+                isPlaying = true;
+                console.log('Background audio resumed');
+            } catch (error) {
+                console.error('Failed to play audio:', error);
+                isPlaying = false;
+            }
+        }
+        updateToggleButton();
+    });
+    
+    // Handle audio events
+    audio.addEventListener('play', () => {
+        isPlaying = true;
+        updateToggleButton();
+    });
+    
+    audio.addEventListener('pause', () => {
+        isPlaying = false;
+        updateToggleButton();
+    });
+    
+    audio.addEventListener('ended', () => {
+        // This shouldn't happen since we have loop="true", but just in case
+        isPlaying = false;
+        updateToggleButton();
+    });
+    
+    audio.addEventListener('error', (e) => {
+        console.error('Audio error:', e);
+        isPlaying = false;
+        updateToggleButton();
+        // Hide the audio toggle if audio fails to load
+        audioToggle.style.display = 'none';
+    });
+    
+    // Set initial state
+    updateToggleButton();
+    
+    // Try to autoplay after a short delay to allow page to settle
+    setTimeout(() => {
+        playAudio();
+    }, 1000);
+    
+    // Also try to play on first user interaction with the page
+    const enableAudioOnInteraction = async () => {
+        if (!isPlaying) {
+            await playAudio();
+        }
+        // Remove the event listeners after first interaction
+        document.removeEventListener('click', enableAudioOnInteraction);
+        document.removeEventListener('touchstart', enableAudioOnInteraction);
+        document.removeEventListener('keydown', enableAudioOnInteraction);
+    };
+    
+    document.addEventListener('click', enableAudioOnInteraction);
+    document.addEventListener('touchstart', enableAudioOnInteraction);
+    document.addEventListener('keydown', enableAudioOnInteraction);
 } 

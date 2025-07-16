@@ -84,6 +84,46 @@ header h1 {
 
 /* Custom cursor styling removed for clean look */
 
+/* Audio Toggle Button */
+.audio-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 1000;
+}
+
+.audio-toggle:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.audio-toggle svg {
+    color: #2d5016;
+    transition: all 0.3s ease;
+}
+
+.audio-toggle.muted #soundWaves {
+    opacity: 0.3;
+    transform: scale(0.8);
+}
+
+.audio-toggle.muted svg {
+    color: #999;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     header h1 {
