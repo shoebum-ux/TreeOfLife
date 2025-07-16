@@ -8,7 +8,7 @@ class RevealPainter {
         // Settings for reveal effect
         this.brushSize = 40; // Reduced by 50%
         this.revealStrength = 1.0;
-        this.fadeOpacity = 0.15; // Very faint initial image
+        this.fadeOpacity = 0.25; // Increased opacity for better visibility (15% + 10%)
         this.fadeOutDuration = 3900; // 3.9 second fade out (30% longer)
         this.revealedAreas = []; // Track revealed areas with timestamps
         
