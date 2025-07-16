@@ -89,7 +89,7 @@ header h1 {
     position: fixed;
     top: 50%;
     right: 30px;
-    transform: translateY(-150px); /* Align with title position (title is -100px + some offset) */
+    transform: translateY(-100px); /* Match title's exact position (title has top: -100px) */
     width: 50px;
     height: 50px;
     background: rgba(255, 255, 255, 0.9);
@@ -98,7 +98,7 @@ header h1 {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease; /* Removed transform from transition */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -107,7 +107,7 @@ header h1 {
 
 .audio-toggle:hover {
     background: rgba(255, 255, 255, 1);
-    transform: scale(1.05);
+    /* Removed transform scale to prevent movement */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
