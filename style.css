@@ -88,7 +88,7 @@ header h1 {
 .audio-toggle {
     position: fixed;
     top: calc(50% - 400px); /* Move 200px higher to align with title */
-    right: 30px;
+    right: 18px; /* Moved 12px left from original 30px */
     width: 50px;
     height: 50px;
     background: rgba(255, 255, 255, 0.9);
