@@ -470,7 +470,7 @@ function initializeAudio() {
     const audioToggle = document.getElementById('audioToggle');
     const soundWaves = document.getElementById('soundWaves');
     
-    let isPlaying = false;
+    let isPlaying = true; // Default to ON
     
     // Try to autoplay the audio (may be blocked by browser)
     const playAudio = async () => {
@@ -481,7 +481,7 @@ function initializeAudio() {
             console.log('Background audio started');
         } catch (error) {
             console.log('Autoplay was prevented. User interaction required:', error);
-            isPlaying = false;
+            // Keep isPlaying true so button shows correct state, audio will start on interaction
             updateToggleButton();
         }
     };
@@ -544,23 +544,32 @@ function initializeAudio() {
     // Set initial state
     updateToggleButton();
     
-    // Try to autoplay after a short delay to allow page to settle
+    // Try to autoplay immediately and after a short delay
+    playAudio();
     setTimeout(() => {
         playAudio();
-    }, 1000);
+    }, 500);
     
     // Also try to play on first user interaction with the page
     const enableAudioOnInteraction = async () => {
-        if (!isPlaying) {
-            await playAudio();
+        if (!audio.paused) return; // Already playing
+        try {
+            await audio.play();
+            isPlaying = true;
+            updateToggleButton();
+            console.log('Audio started on user interaction');
+        } catch (error) {
+            console.log('Could not start audio on interaction:', error);
         }
         // Remove the event listeners after first interaction
         document.removeEventListener('click', enableAudioOnInteraction);
         document.removeEventListener('touchstart', enableAudioOnInteraction);
         document.removeEventListener('keydown', enableAudioOnInteraction);
+        document.removeEventListener('mousemove', enableAudioOnInteraction);
     };
     
     document.addEventListener('click', enableAudioOnInteraction);
     document.addEventListener('touchstart', enableAudioOnInteraction);
     document.addEventListener('keydown', enableAudioOnInteraction);
+    document.addEventListener('mousemove', enableAudioOnInteraction);
 } 
