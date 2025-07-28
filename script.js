@@ -529,4 +529,37 @@ function initializeAudio() {
     
     // Set initial state (audio off)
     updateToggleButton();
-} 
+}
+
+// Instruction text functionality
+function setupInstructionText() {
+    const instructionText = document.getElementById('instructionText');
+    const revealCanvas = document.getElementById('revealCanvas');
+    
+    if (!instructionText || !revealCanvas) return;
+    
+    let hasInteracted = false;
+    
+    function fadeOutInstruction() {
+        if (!hasInteracted) {
+            hasInteracted = true;
+            instructionText.style.opacity = '0';
+            
+            // Remove the element after fade animation completes
+            setTimeout(() => {
+                if (instructionText.parentNode) {
+                    instructionText.parentNode.removeChild(instructionText);
+                }
+            }, 500); // Match the CSS transition duration
+        }
+    }
+    
+    // Fade out when mouse enters the canvas area
+    revealCanvas.addEventListener('mouseenter', fadeOutInstruction);
+    
+    // Also fade out on first touch for mobile devices
+    revealCanvas.addEventListener('touchstart', fadeOutInstruction, { once: true });
+}
+
+// Initialize instruction text when DOM is loaded
+document.addEventListener('DOMContentLoaded', setupInstructionText); 
