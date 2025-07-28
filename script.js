@@ -26,22 +26,17 @@ class RevealPainter {
     loadImage() {
         console.log('Loading TreeOfLifeColoredMin.png...');
         
-        // Show loading effect
-        this.showLoadingState();
-        
         this.image = new Image();
         this.image.onload = () => {
             console.log('Image loaded successfully! Dimensions:', this.image.width, 'x', this.image.height);
             this.setupCanvases();
             this.drawInitialImage();
             this.imageLoaded = true;
-            this.hideLoadingState();
             this.startInitialAnimation();
         };
         
         this.image.onerror = () => {
             console.error('Failed to load TreeOfLifeColoredMin.png');
-            this.showErrorState();
         };
         
         this.image.src = 'TreeOfLifeColoredMin.png';
@@ -372,62 +367,6 @@ class RevealPainter {
             this.setupCanvases();
             this.drawInitialImage();
         }, 100);
-    }
-    
-    showLoadingState() {
-        const container = document.querySelector('.canvas-container');
-        container.classList.add('loading-shimmer');
-        
-        // Set minimum size for loading state
-        this.revealCanvas.width = 800;
-        this.revealCanvas.height = 600;
-        this.baseCanvas.width = 800;
-        this.baseCanvas.height = 600;
-        
-        // Draw loading pattern
-        const gradient = this.baseCtx.createLinearGradient(0, 0, 800, 600);
-        gradient.addColorStop(0, '#f8f8f8');
-        gradient.addColorStop(0.5, '#e8e8e8');
-        gradient.addColorStop(1, '#f8f8f8');
-        
-        this.baseCtx.fillStyle = gradient;
-        this.baseCtx.fillRect(0, 0, 800, 600);
-        
-        // Add loading text
-        this.baseCtx.fillStyle = 'rgba(45, 80, 22, 0.8)';
-        this.baseCtx.font = 'bold 24px Georgia, serif';
-        this.baseCtx.textAlign = 'center';
-        this.baseCtx.fillText('Loading Tree of Life...', 400, 300);
-        
-        this.baseCtx.font = '16px Georgia, serif';
-        this.baseCtx.fillStyle = 'rgba(45, 80, 22, 0.6)';
-        this.baseCtx.fillText('Preparing natural tree formation...', 400, 330);
-        
-        this.baseCtx.textAlign = 'left';
-    }
-    
-    hideLoadingState() {
-        const container = document.querySelector('.canvas-container');
-        container.classList.remove('loading-shimmer');
-    }
-    
-    showErrorState() {
-        this.hideLoadingState();
-        
-        this.baseCtx.fillStyle = '#f8f8f8';
-        this.baseCtx.fillRect(0, 0, this.baseCanvas.width, this.baseCanvas.height);
-        
-        this.baseCtx.fillStyle = '#d32f2f';
-        this.baseCtx.font = 'bold 24px Georgia, serif';
-        this.baseCtx.textAlign = 'center';
-        this.baseCtx.fillText('Unable to load Tree of Life', 400, 280);
-        
-        this.baseCtx.font = '16px Georgia, serif';
-        this.baseCtx.fillStyle = 'rgba(45, 80, 22, 0.8)';
-        this.baseCtx.fillText('Please ensure "TreeOfLifeColoredMin.png" is in the same folder', 400, 310);
-        this.baseCtx.fillText('and refresh the page to try again', 400, 335);
-        
-        this.baseCtx.textAlign = 'left';
     }
 }
 

@@ -184,12 +184,6 @@ header h1 {
     }
 }
 
-/* Loading animation */
-@keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-}
-
 /* Breathing to life animation for title */
 @keyframes breatheToLife {
     0% {
@@ -198,12 +192,6 @@ header h1 {
     100% {
         opacity: 1;
     }
-}
-
-.loading-shimmer {
-    background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.2) 50%, transparent 100%);
-    background-size: 200% 100%;
-    animation: shimmer 2s infinite;
 }
 
 /* Hover effects removed for clean experience */ 
