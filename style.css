@@ -163,6 +163,7 @@ body {
     font-weight: 400;
     color: #333;
     margin-bottom: 30px;
+    text-transform: uppercase;
 }
 
 .services-divider {
@@ -214,6 +215,7 @@ body {
     padding: 2px 4px;
     border-radius: 8px;
     display: inline-block;
+    text-transform: uppercase;
 }
 
 .service-caption {
