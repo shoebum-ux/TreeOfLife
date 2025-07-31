@@ -1,3 +1,58 @@
+// Hero Mouse Trail Effect
+class HeroMouseTrail {
+    constructor() {
+        this.heroSection = document.getElementById('heroSection');
+        this.assetPaths = [
+            'Assets/1.png',
+            'Assets/2.png', 
+            'Assets/3.png',
+            'Assets/4.png',
+            'Assets/5.png',
+            'Assets/6.png'
+        ];
+        this.lastTrailTime = 0;
+        this.trailDelay = 150; // milliseconds between trail images
+        
+        this.bindTrailEvents();
+    }
+    
+    bindTrailEvents() {
+        if (this.heroSection) {
+            this.heroSection.addEventListener('mousemove', (e) => {
+                this.createTrailImage(e);
+            });
+        }
+    }
+    
+    createTrailImage(e) {
+        const now = Date.now();
+        if (now - this.lastTrailTime < this.trailDelay) return;
+        
+        this.lastTrailTime = now;
+        
+        const rect = this.heroSection.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const randomAsset = this.assetPaths[Math.floor(Math.random() * this.assetPaths.length)];
+        
+        const trailImage = document.createElement('img');
+        trailImage.src = randomAsset;
+        trailImage.className = 'trail-image';
+        trailImage.style.left = (x - 45) + 'px'; // Center the 90px image
+        trailImage.style.top = (y - 45) + 'px';
+        
+        this.heroSection.appendChild(trailImage);
+        
+        // Remove element after animation completes
+        setTimeout(() => {
+            if (trailImage.parentNode) {
+                trailImage.parentNode.removeChild(trailImage);
+            }
+        }, 2000);
+    }
+}
+
 class RevealPainter {
     constructor() {
         this.revealCanvas = document.getElementById('revealCanvas');
@@ -501,4 +556,9 @@ function setupInstructionText() {
 }
 
 // Initialize instruction text when DOM is loaded
-document.addEventListener('DOMContentLoaded', setupInstructionText); 
+document.addEventListener('DOMContentLoaded', setupInstructionText);
+
+// Initialize hero mouse trail effect
+document.addEventListener('DOMContentLoaded', () => {
+    new HeroMouseTrail();
+}); 

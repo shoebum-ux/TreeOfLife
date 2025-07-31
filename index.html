@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Studio Kudrat - Launching Soon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,26 +16,96 @@
         Your browser does not support the audio element.
     </audio>
     
-    <!-- Speaker Toggle -->
-    <div class="audio-toggle" id="audioToggle">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path id="speakerIcon" d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path id="soundWaves" d="M19.07 4.93C20.97 6.83 20.97 9.17 19.07 11.07M16.24 7.76C17.05 8.57 17.05 9.43 16.24 10.24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </div>
-
-    <div class="container">
-        <header>
-            <h1>Studio Kudrat</h1>
-            <p class="subtitle">Launching soon</p>
-        </header>
-        
-        <div class="canvas-container">
-            <canvas id="revealCanvas"></canvas>
-            <canvas id="baseCanvas"></canvas>
-            <div id="instructionText" class="instruction-text">Move your mouse here</div>
+    <!-- Header Section -->
+    <header class="main-header">
+        <div class="header-left">Studio Kudrat</div>
+        <div class="header-right">
+            <span>Launching Soon</span>
+            <!-- Speaker Toggle -->
+            <div class="audio-toggle" id="audioToggle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path id="speakerIcon" d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path id="soundWaves" d="M19.07 4.93C20.97 6.83 20.97 9.17 19.07 11.07M16.24 7.76C17.05 8.57 17.05 9.43 16.24 10.24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
         </div>
-    </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="heroSection">
+        <!-- Background Images -->
+        <img src="Assets/1.png" alt="" class="hero-bg-image img1">
+        <img src="Assets/2.png" alt="" class="hero-bg-image img2">
+        <img src="Assets/3.png" alt="" class="hero-bg-image img3">
+        <img src="Assets/4.png" alt="" class="hero-bg-image img4">
+        <img src="Assets/5.png" alt="" class="hero-bg-image img5">
+        <img src="Assets/6.png" alt="" class="hero-bg-image img6">
+        
+        <h1 class="hero-title">DESIGNS THAT GROW LIKE NATURE.<br>CALM. INTENTIONAL. ALIVE</h1>
+        <p class="hero-caption">Studio Kudrat is an independent creative studio blending art, code, and poetry.<br>We like to make soulful products - with function, beauty, and harmony, just like nature</p>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <h2 class="services-title">Services</h2>
+        <div class="services-divider"></div>
+        
+        <div class="services-content">
+            <div class="services-video">
+                <video autoplay muted loop>
+                    <source src="Services2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <div class="services-text">
+                <div class="service-item">
+                    <h3 class="service-title">Brand & Identity Systems</h3>
+                    <p class="service-caption">Shape how the world remembers you. We craft soulful, story-rich identities — from logos and typography to voice and visual language — that grow with you.</p>
+                </div>
+                
+                <div class="service-item">
+                    <h3 class="service-title">Web & App Design</h3>
+                    <p class="service-caption">Build spaces your users want to live in. From poetic landing pages to intuitive product flows, we design digital experiences that feel alive, calm, and deeply intentional.</p>
+                </div>
+                
+                <div class="service-item">
+                    <h3 class="service-title">AI-Driven Experience Design</h3>
+                    <p class="service-caption">Soft interfaces for powerful intelligence. We design human-first experiences that blend AI capabilities with emotional clarity — turning complexity into calm.</p>
+                </div>
+                
+                <div class="service-item">
+                    <h3 class="service-title">Product & Packaging Design</h3>
+                    <p class="service-caption">Make your ideas tangible. We bring your vision into the physical world — through illustrated goods, print collateral, unboxing experiences, and tactile storytelling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Moving Ticker -->
+    <section class="ticker-section">
+        <div class="ticker-content">
+            <span>STUDIO KUDRAT</span>
+            <span>STUDIO KUDRAT</span>
+            <span>STUDIO KUDRAT</span>
+            <span>STUDIO KUDRAT</span>
+            <span>STUDIO KUDRAT</span>
+            <span>STUDIO KUDRAT</span>
+            <span>STUDIO KUDRAT</span>
+            <span>STUDIO KUDRAT</span>
+        </div>
+    </section>
+
+    <!-- Tree Painting Section -->
+    <section class="tree-painting-section">
+        <div class="container">
+            <div class="canvas-container">
+                <canvas id="revealCanvas"></canvas>
+                <canvas id="baseCanvas"></canvas>
+                <div id="instructionText" class="instruction-text">Move your mouse here</div>
+            </div>
+        </div>
+    </section>
     
     <script src="script.js"></script>
 </body>
