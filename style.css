@@ -37,7 +37,6 @@ body {
 .header-right span {
     background-color: #E9FFC0;
     padding: 2px 4px;
-    border-radius: 8px;
 }
 
 /* Hero Section */
@@ -71,7 +70,6 @@ body {
     max-width: 1200px;
     background-color: #E9FFC0;
     padding: 2px 4px;
-    border-radius: 8px;
     display: inline-block;
     text-align: center;
 }
@@ -182,7 +180,7 @@ body {
 .services-video {
     width: 100%;
     border-radius: 8px;
-    margin-top: -180px;
+    margin-top: -170px;
 }
 
 .services-video video {
@@ -196,7 +194,7 @@ body {
 .services-text {
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 44px;
 }
 
 .service-item {
@@ -213,17 +211,21 @@ body {
     line-height: 1.2;
     background-color: #E9FFC0;
     padding: 2px 4px;
-    border-radius: 8px;
     display: inline-block;
     text-transform: uppercase;
 }
 
 .service-caption {
     font-family: 'Instrument Sans', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     color: #333;
     line-height: 1.5;
+}
+
+.caption-first {
+    font-style: italic;
+    font-weight: 500;
 }
 
 /* Moving Ticker */
@@ -265,6 +267,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+.copyright {
+    font-family: 'Instrument Serif', serif;
+    font-size: 16px;
+    color: #333;
+    margin: 0;
 }
 
 .container {
@@ -370,7 +386,12 @@ body {
     }
     
     .service-caption {
-        font-size: 15px;
+        font-size: 13px;
+    }
+    
+    .caption-first {
+        font-style: italic;
+        font-weight: 500;
     }
     
     .hero-bg-image.img1, .hero-bg-image.img2, .hero-bg-image.img3,
@@ -436,7 +457,12 @@ body {
     }
     
     .service-caption {
-        font-size: 12px;
+        font-size: 10px;
+    }
+    
+    .caption-first {
+        font-style: italic;
+        font-weight: 500;
     }
     
     .ticker-content {
@@ -489,7 +515,12 @@ body {
     }
     
     .service-caption {
-        font-size: 12px;
+        font-size: 10px;
+    }
+    
+    .caption-first {
+        font-style: italic;
+        font-weight: 500;
     }
     
     .ticker-content {
