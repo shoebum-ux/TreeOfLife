@@ -61,11 +61,13 @@ class RevealPainter {
         this.baseCtx = this.baseCanvas.getContext('2d');
         
         // Settings for reveal effect
-        this.brushSize = 40; // Reduced by 50%
+        this.brushSize = 32; // 20% smaller for more delicate painting
         this.revealStrength = 1.0;
         this.fadeOpacity = 0.25; // Increased opacity for better visibility (15% + 10%)
-        this.fadeOutDuration = 3900; // 3.9 second fade out (30% longer)
-        this.revealedAreas = []; // Track revealed areas with timestamps
+        this.revealedAreas = []; // Track revealed areas (no fading, permanent until viewport reset)
+        this.intersectionObserver = null; // Track viewport visibility
+        this.lastStrokePos = { x: -1000, y: -1000 }; // Track last stroke position for spacing
+        this.strokeSpacing = 15; // Minimum distance between strokes for blob visibility
         
         // Image properties
         this.image = null;
@@ -85,6 +87,8 @@ class RevealPainter {
         this.image.onload = () => {
             console.log('Image loaded successfully! Dimensions:', this.image.width, 'x', this.image.height);
             this.setupCanvases();
+            this.bindEvents();
+            this.setupViewportObserver();
             this.drawInitialImage();
             this.imageLoaded = true;
             this.startInitialAnimation();
@@ -168,29 +172,39 @@ class RevealPainter {
     // Reveal line method removed - now using simple hover reveal
     
     revealAtPoint(x, y) {
-        // Add this reveal to our tracking array
-        this.revealedAreas.push({
-            x: x,
-            y: y,
-            timestamp: Date.now(),
-            radius: this.brushSize / 2
-        });
+        // Check distance from last stroke for spacing
+        const distance = Math.sqrt(
+            (x - this.lastStrokePos.x) ** 2 + 
+            (y - this.lastStrokePos.y) ** 2
+        );
         
-        // Immediately draw this reveal
-        this.drawRevealArea(x, y, this.brushSize / 2, 1.0);
+        // Only create new stroke if far enough from last one
+        if (distance >= this.strokeSpacing) {
+            this.lastStrokePos = { x, y };
+            
+            // Add this reveal to our tracking array (permanent, no timestamp needed)
+            this.revealedAreas.push({
+                x: x,
+                y: y,
+                radius: this.brushSize / 2
+            });
+            
+            // Immediately draw this reveal
+            this.drawRevealArea(x, y, this.brushSize / 2, 1.0);
+        }
     }
     
     drawRevealArea(x, y, radius, opacity) {
         // Create a brush with soft bleeding effect
         this.revealCtx.save();
         
-        // Create multiple bleeding layers for organic watercolor effect
+        // Create multiple bleeding layers for organic watercolor effect with gentle opacity
         const bleedLayers = [
-            { size: 1.0, opacity: 1.0, offset: 0 },      // Core brush
-            { size: 1.4, opacity: 0.6, offset: 2 },      // First bleed ring
-            { size: 1.8, opacity: 0.3, offset: 4 },      // Second bleed ring
-            { size: 2.2, opacity: 0.15, offset: 6 },     // Third bleed ring
-            { size: 2.6, opacity: 0.08, offset: 8 }      // Outer bleed ring
+            { size: 1.0, opacity: 0.4, offset: 0 },      // Core brush - gentle
+            { size: 1.4, opacity: 0.25, offset: 2 },     // First bleed ring
+            { size: 1.8, opacity: 0.15, offset: 4 },     // Second bleed ring
+            { size: 2.2, opacity: 0.08, offset: 6 },     // Third bleed ring
+            { size: 2.6, opacity: 0.04, offset: 8 }      // Outer bleed ring - very subtle
         ];
         
         bleedLayers.forEach((layer, index) => {
@@ -201,24 +215,13 @@ class RevealPainter {
             const offsetX = (Math.sin(x * 0.01 + index) * layer.offset);
             const offsetY = (Math.cos(y * 0.01 + index) * layer.offset);
             
-            // Create radial gradient for this bleeding layer
-            const gradient = this.revealCtx.createRadialGradient(
-                x + offsetX, y + offsetY, 0,
-                x + offsetX, y + offsetY, bleedRadius
-            );
-            
-            const layerOpacity = opacity * layer.opacity;
-            gradient.addColorStop(0, `rgba(255, 255, 255, ${layerOpacity})`);
-            gradient.addColorStop(0.3, `rgba(255, 255, 255, ${layerOpacity * 0.8})`);
-            gradient.addColorStop(0.6, `rgba(255, 255, 255, ${layerOpacity * 0.4})`);
-            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            
             // Create circular clipping path for this layer
             this.revealCtx.beginPath();
             this.revealCtx.arc(x + offsetX, y + offsetY, bleedRadius, 0, Math.PI * 2);
             this.revealCtx.clip();
             
             // Draw the image with this bleeding layer
+            const layerOpacity = opacity * layer.opacity;
             this.revealCtx.globalAlpha = layerOpacity;
             this.revealCtx.drawImage(this.image, 0, 0, this.revealCanvas.width, this.revealCanvas.height);
             
@@ -265,39 +268,37 @@ class RevealPainter {
         this.baseCtx.restore();
     }
     
-    startFadeOutLoop() {
-        const animate = () => {
-            this.updateFadeOut();
-            requestAnimationFrame(animate);
-        };
-        animate();
+    setupViewportObserver() {
+        // Create intersection observer to detect when tree is out of view
+        this.intersectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    // Tree is completely out of view - reset everything for smooth scrolling
+                    this.resetTree();
+                }
+            });
+        }, {
+            threshold: 0, // Trigger when completely out of view
+            rootMargin: '0px'
+        });
+        
+        // Observe the tree painting section
+        const treePaintingSection = document.querySelector('.tree-painting-section');
+        if (treePaintingSection) {
+            this.intersectionObserver.observe(treePaintingSection);
+        }
     }
     
-    updateFadeOut() {
-        if (this.revealedAreas.length === 0) return;
-        
-        const currentTime = Date.now();
+    resetTree() {
+        // Clear all revealed areas
+        this.revealedAreas = [];
         
         // Clear the reveal canvas
-        this.revealCtx.clearRect(0, 0, this.revealCanvas.width, this.revealCanvas.height);
+        if (this.revealCtx) {
+            this.revealCtx.clearRect(0, 0, this.revealCanvas.width, this.revealCanvas.height);
+        }
         
-        // Filter out completely faded areas and update remaining ones
-        this.revealedAreas = this.revealedAreas.filter(area => {
-            const age = currentTime - area.timestamp;
-            
-            if (age >= this.fadeOutDuration) {
-                return false; // Remove this area
-            }
-            
-            // Calculate smooth fade opacity (1.0 to 0.0 over fadeOutDuration)
-            const fadeProgress = age / this.fadeOutDuration;
-            const opacity = Math.max(0, 1.0 - fadeProgress);
-            
-            // Redraw this area with faded opacity
-            this.drawRevealArea(area.x, area.y, area.radius, opacity);
-            
-            return true; // Keep this area
-        });
+        console.log('Tree reset - out of viewport');
     }
     
     startInitialAnimation() {
@@ -432,6 +433,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize audio functionality
     initializeAudio();
+    
+    // Scroll to top on page load
+    window.scrollTo(0, 0);
 });
 
 // Add some utility functions

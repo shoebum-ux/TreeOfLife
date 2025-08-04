@@ -228,52 +228,38 @@ body {
     font-weight: 500;
 }
 
-/* Moving Ticker */
-.ticker-section {
-    overflow: hidden;
-    white-space: nowrap;
-    background-color: white;
-    padding: 20px 0;
-    margin: 20px 0 60px;
-}
 
-.ticker-content {
-    display: inline-block;
-    animation: ticker 15s linear infinite;
-    font-family: 'Instrument Serif', serif;
-    font-size: 24px;
-    font-weight: 400;
-    color: #333;
-    white-space: nowrap;
-}
-
-.ticker-content span {
-    margin-right: 100px;
-}
-
-@keyframes ticker {
-    0% {
-        transform: translateX(100vw);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
-}
 
 /* Tree Painting Section */
 .tree-painting-section {
-    padding: 100px 20px;
+    padding: 120px 20px;
     margin-top: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.tree-painting-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('BG TOL5.png');
+    background-size: 81%;
+    background-position: center calc(100% - 150px);
+    background-repeat: no-repeat;
+    opacity: 1;
+    z-index: -1;
 }
 
 /* Footer */
 .footer {
     text-align: center;
     padding: 40px 20px;
-    margin-top: 60px;
+    margin-top: 0;
 }
 
 .copyright {
@@ -402,6 +388,10 @@ body {
     .trail-image {
         width: 90px;
     }
+    
+    .tree-painting-section {
+        padding: 96px 20px;
+    }
 }
 
 @media (max-width: 968px) {
@@ -426,6 +416,10 @@ body {
     .hero-caption {
         font-size: 14px;
         padding: 2px 4px;
+    }
+    
+    .tree-painting-section {
+        padding: 84px 20px;
     }
 }
 
@@ -465,9 +459,7 @@ body {
         font-weight: 500;
     }
     
-    .ticker-content {
-        font-size: 18px;
-    }
+
     
     .hero-bg-image {
         opacity: 0.4;
@@ -480,6 +472,10 @@ body {
     
     .trail-image {
         width: 76px;
+    }
+    
+    .tree-painting-section {
+        padding: 78px 20px;
     }
 
 }
@@ -523,9 +519,7 @@ body {
         font-weight: 500;
     }
     
-    .ticker-content {
-        font-size: 12px;
-    }
+
     
     .hero-bg-image {
         opacity: 0.3;
@@ -538,5 +532,9 @@ body {
     
     .trail-image {
         width: 60px;
+    }
+    
+    .tree-painting-section {
+        padding: 72px 20px;
     }
 } 
