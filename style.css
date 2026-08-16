@@ -28,15 +28,34 @@ body {
     font-weight: 400;
 }
 
+.header-left {
+    color: inherit;
+    text-decoration: none;
+}
+
 .header-right {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.header-right span {
-    background-color: #E9FFC0;
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.site-nav a {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    color: #333;
+    text-decoration: none;
     padding: 2px 4px;
+    transition: background-color 0.3s ease;
+}
+
+.site-nav a:hover {
+    background-color: #E9FFC0;
 }
 
 /* Hero Section */
@@ -49,6 +68,9 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
+    /* Clip trail leaves that spawn near the edges instead of letting them
+       spill past the viewport and get cut off mid-fade. */
+    overflow: hidden;
 }
 
 .hero-title {
@@ -133,19 +155,217 @@ body {
     animation: fadeOut 2s ease-out forwards;
 }
 
+/* Centering is done here rather than in JS so the leaf stays on the cursor
+   at every breakpoint, where .trail-image width changes. */
 @keyframes fadeOut {
     0% {
         opacity: 1.0;
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
     50% {
         opacity: 0.8;
-        transform: scale(1.1);
+        transform: translate(-50%, -50%) scale(1.1);
     }
     100% {
         opacity: 0;
-        transform: scale(0.8);
+        transform: translate(-50%, -50%) scale(0.8);
     }
+}
+
+/* Music Section */
+.music-section {
+    padding: 100px 60px 0;
+    max-width: 1600px;
+    margin: 120px auto 0;
+}
+
+.subsection-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    text-transform: uppercase;
+    background-color: #E9FFC0;
+    padding: 2px 4px;
+    display: inline-block;
+    margin: 100px 0 40px;
+}
+
+/* Featured films */
+.film-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.film-card {
+    display: flex;
+    flex-direction: column;
+}
+
+/* The thumbnail is a facade: YouTube's player is only loaded on click,
+   so the page stays light and no third-party script runs until asked. */
+.film-thumb {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 8px;
+    line-height: 0;
+}
+
+.film-thumb img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.6s ease, filter 0.6s ease;
+    filter: saturate(0.92);
+}
+
+.film-thumb:hover img,
+.film-thumb:focus-visible img {
+    transform: scale(1.04);
+    filter: saturate(1.05);
+}
+
+.film-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    opacity: 0.85;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.35));
+    pointer-events: none;
+}
+
+.film-thumb:hover .film-play,
+.film-thumb:focus-visible .film-play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08);
+}
+
+.film-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    color: #333;
+    text-transform: uppercase;
+    background-color: #E9FFC0;
+    padding: 2px 4px;
+    display: inline-block;
+    align-self: flex-start;
+    margin: 24px 0 10px;
+}
+
+.film-meta {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Instagram embeds — the official embed.js rewrites each blockquote into
+   an iframe, so widths are constrained here rather than on the child. */
+.reel-grid {
+    display: grid;
+    /* Two up rather than four: Instagram's iframe enforces a 326px minimum,
+       so four columns would overflow before the cards could shrink. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+    max-width: 1140px;
+    align-items: start;
+}
+
+.reel-grid .instagram-media {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+.music-links {
+    display: flex;
+    gap: 28px;
+    margin-top: 60px;
+}
+
+.music-links a {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #333;
+    padding-bottom: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.music-links a:hover {
+    background-color: #E9FFC0;
+}
+
+/* Video Lightbox */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: rgba(20, 24, 18, 0.92);
+    animation: lightboxIn 0.3s ease-out;
+}
+
+.lightbox[hidden] {
+    display: none;
+}
+
+@keyframes lightboxIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.lightbox-frame {
+    width: min(100%, 1100px);
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.lightbox-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    width: 48px;
+    height: 48px;
+    font-size: 36px;
+    line-height: 1;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.lightbox-close:hover {
+    opacity: 1;
 }
 
 /* Services Section */
@@ -155,7 +375,8 @@ body {
     margin: 120px auto 0;
 }
 
-.services-title {
+/* Shared section chrome — used by both Music and Studio */
+.section-title {
     font-family: 'Instrument Serif', serif;
     font-size: 36px;
     font-weight: 400;
@@ -164,10 +385,19 @@ body {
     text-transform: uppercase;
 }
 
-.services-divider {
+.section-divider {
     height: 2px;
     background-color: #333;
     margin-bottom: 80px;
+}
+
+.section-intro {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    max-width: 620px;
+    margin-bottom: 60px;
 }
 
 .services-content {
@@ -404,11 +634,25 @@ body {
         grid-template-columns: 1fr;
         gap: 60px;
     }
-    
+
     .services-section {
         padding: 80px 40px;
     }
-    
+
+    .music-section {
+        padding: 80px 40px 0;
+    }
+
+    .film-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .reel-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+
     .hero-title {
         font-size: 76px;
     }
@@ -442,10 +686,32 @@ body {
         padding: 2px 4px;
     }
     
-    .services-title {
+    .section-title {
         font-size: 24px;
     }
-    
+
+    .subsection-title {
+        font-size: 16px;
+        margin: 70px 0 30px;
+    }
+
+    .film-title {
+        font-size: 20px;
+    }
+
+    .film-meta {
+        font-size: 15px;
+    }
+
+    .lightbox {
+        padding: 20px;
+    }
+
+    .lightbox-close {
+        top: 12px;
+        right: 16px;
+    }
+
     .service-title {
         font-size: 14px;
     }
@@ -501,9 +767,19 @@ body {
     .services-section {
         padding: 60px 20px;
     }
-    
-    .services-title {
+
+    .music-section {
+        padding: 60px 20px 0;
+    }
+
+    .section-title {
         font-size: 18px;
+    }
+
+    .music-links {
+        flex-direction: column;
+        gap: 14px;
+        align-items: flex-start;
     }
     
     .service-title {
