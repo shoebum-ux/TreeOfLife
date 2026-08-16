@@ -1,4 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@100;300;400&display=swap');
+/* ============================================================
+   Studio Kudrat — design tokens
+   ============================================================ */
+
+:root {
+    /* Warm paper rather than pure white — softer, and closer to the
+       watercolor work the site is built around. */
+    --paper: #FCFBF7;
+    --ink: #1E241B;
+    --ink-soft: #5A6155;
+    --rule: rgba(30, 36, 27, 0.16);
+
+    /* Lime is the brand mark, used sparingly. Leaf green carries the
+       small structural accents where lime is too pale to read. */
+    --lime: #E9FFC0;
+    --accent: #7FA653;
+
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Carries the statement and the section headings — a squarer, more
+       mechanical face that nods at the electronic side of the work. */
+    --grotesk: 'Space Grotesk', 'Instrument Sans', sans-serif;
+
+    /* Fluid type — each size interpolates with the viewport, so there are
+       no separate font-size rules per breakpoint and nothing collapses to
+       an unreadable 9px on a phone. */
+    --fs-display: clamp(2.75rem, 1.15rem + 5.9vw, 6.25rem);
+    --fs-lead:    clamp(1.0625rem, 1rem + 0.32vw, 1.25rem);
+    --fs-title:   clamp(1.75rem, 1.5rem + 1.0vw, 2.5rem);
+    --fs-film:    clamp(1.5rem, 1.35rem + 0.6vw, 2rem);
+    --fs-body:    clamp(1rem, 0.97rem + 0.14vw, 1.0625rem);
+    --fs-small:   clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+
+    --gutter: clamp(1.5rem, 0.6rem + 3.6vw, 3.75rem);
+}
 
 * {
     margin: 0;
@@ -7,25 +41,50 @@
 }
 
 body {
-    font-family: 'Instrument Serif', serif;
-    background: white;
+    font-family: var(--sans);
+    font-size: var(--fs-body);
+    line-height: 1.6;
+    background: var(--paper);
     min-height: 100vh;
-    color: #333;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Header Section */
+::selection {
+    background: var(--lime);
+    color: var(--ink);
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* The marker highlight: a gradient filling only the lower portion of the
+   line, so it reads as a hand-drawn accent instead of a filled label. */
+mark {
+    background: linear-gradient(to top, var(--lime) 0 0.42em, transparent 0.42em);
+    color: inherit;
+    padding: 0 0.08em;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+
 .main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 60px;
-    font-family: 'Instrument Serif', serif;
-    font-size: 36px;
-    color: #333;
+    padding: 32px var(--gutter);
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.75rem);
 }
 
-.header-left, .header-right {
-    font-weight: 400;
+.header-left {
+    color: inherit;
+    text-decoration: none;
+    letter-spacing: -0.01em;
 }
 
 .header-right {
@@ -34,44 +93,64 @@ body {
     gap: 20px;
 }
 
-.header-right span {
-    background-color: #E9FFC0;
-    padding: 2px 4px;
-}
+/* ============================================================
+   Hero
+   ============================================================ */
 
-/* Hero Section */
 .hero-section {
     text-align: center;
-    padding: 80px 40px;
+    padding: clamp(3rem, 1rem + 7vw, 7rem) var(--gutter);
     max-width: 1400px;
-    margin: 80px auto 0;
+    margin: clamp(2rem, 1rem + 4vw, 5rem) auto 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
+    /* Clip trail leaves that spawn near the edges instead of letting them
+       spill past the viewport and get cut off mid-fade. */
+    overflow: hidden;
 }
 
 .hero-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 104px;
+    font-family: var(--serif);
+    font-size: var(--fs-display);
     font-weight: 400;
-    line-height: 1.1;
-    color: #333;
-    margin-bottom: 60px;
-    letter-spacing: -2px;
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    margin-bottom: clamp(1.75rem, 1rem + 2vw, 3rem);
+    text-wrap: balance;
 }
 
 .hero-caption {
-    font-family: 'Instrument Serif', serif;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 1.4;
-    color: #333;
-    max-width: 1200px;
-    background-color: #E9FFC0;
-    padding: 2px 4px;
-    display: inline-block;
-    text-align: center;
+    font-family: var(--grotesk);
+    font-size: var(--fs-lead);
+    line-height: 1.65;
+    color: var(--ink-soft);
+    /* A measure limit keeps the line length readable instead of letting it
+       run the full 1400px. Set in rem, not ch — the serif has a narrow
+       zero, so ch units read far smaller than the actual measure. */
+    max-width: min(37rem, 100%);
+}
+
+.hero-caption p + p {
+    margin-top: 1.15em;
+}
+
+.hero-greeting {
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.hero-signoff {
+    text-wrap: balance;
+}
+
+/* Emoji render on their own vendor font, which sits large and low next to
+   the text — nudge them back into line. */
+.emoji {
+    font-size: 0.92em;
+    line-height: 1;
+    vertical-align: -0.04em;
 }
 
 /* Hero Background Images */
@@ -86,41 +165,12 @@ body {
     transform: scale(1.1);
 }
 
-.hero-bg-image.img1 {
-    top: 5%;
-    left: 2%;
-    width: 80px;
-}
-
-.hero-bg-image.img2 {
-    top: 8%;
-    right: 3%;
-    width: 60px;
-}
-
-.hero-bg-image.img3 {
-    bottom: 5%;
-    left: 5%;
-    width: 70px;
-}
-
-.hero-bg-image.img4 {
-    top: 15%;
-    right: 25%;
-    width: 50px;
-}
-
-.hero-bg-image.img5 {
-    bottom: 8%;
-    right: 3%;
-    width: 75px;
-}
-
-.hero-bg-image.img6 {
-    top: 12%;
-    left: 25%;
-    width: 65px;
-}
+.hero-bg-image.img1 { top: 5%;    left: 2%;   width: 80px; }
+.hero-bg-image.img2 { top: 8%;    right: 3%;  width: 60px; }
+.hero-bg-image.img3 { bottom: 5%; left: 5%;   width: 70px; }
+.hero-bg-image.img4 { top: 15%;   right: 25%; width: 50px; }
+.hero-bg-image.img5 { bottom: 8%; right: 3%;  width: 75px; }
+.hero-bg-image.img6 { top: 12%;   left: 25%;  width: 65px; }
 
 /* Mouse Trail Effect */
 .trail-image {
@@ -133,107 +183,387 @@ body {
     animation: fadeOut 2s ease-out forwards;
 }
 
+/* Centering is done here rather than in JS so the leaf stays on the cursor
+   at every breakpoint, where .trail-image width changes. */
 @keyframes fadeOut {
     0% {
         opacity: 1.0;
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
     50% {
         opacity: 0.8;
-        transform: scale(1.1);
+        transform: translate(-50%, -50%) scale(1.1);
     }
     100% {
         opacity: 0;
-        transform: scale(0.8);
+        transform: translate(-50%, -50%) scale(0.8);
     }
 }
 
-/* Services Section */
-.services-section {
-    padding: 100px 60px;
-    max-width: 1600px;
-    margin: 120px auto 0;
-}
+/* ============================================================
+   Portrait + banner
+   ============================================================ */
 
-.services-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 36px;
-    font-weight: 400;
-    color: #333;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-}
-
-.services-divider {
-    height: 2px;
-    background-color: #333;
-    margin-bottom: 80px;
-}
-
-.services-content {
+/* Side by side rather than stacked — two full-width slabs in a row would
+   dominate the page, and paired they read as one considered spread. */
+.image-pair {
+    max-width: 1400px;
+    margin: clamp(3rem, 2rem + 5vw, 7rem) auto 0;
+    padding: 0 var(--gutter);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
+    gap: clamp(1rem, 0.6rem + 1.5vw, 2rem);
 }
 
-.services-video {
+.image-pair img {
     width: 100%;
-    border-radius: 8px;
-    margin-top: -170px;
-}
-
-.services-video video {
-    width: 100%;
-    height: auto;
+    display: block;
+    border-radius: 4px;
+    /* A shared 16:9 holds the two to the same height. The banner is
+       already 16:9, so only the portrait loses a sliver top and bottom
+       — its subject is centered, and the banner's lettering runs close
+       enough to the edges that cropping it sideways would clip a word. */
+    aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: 8px;
-    transform: scale(0.75);
 }
 
-.services-text {
+.image-pair figcaption {
+    margin-top: 14px;
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+}
+
+/* ============================================================
+   Section chrome
+   ============================================================ */
+
+.music-section {
+    padding: 0 var(--gutter);
+    max-width: 1400px;
+    margin: clamp(5rem, 3rem + 8vw, 11rem) auto 0;
+}
+
+.eyebrow {
+    font-size: var(--fs-small);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+}
+
+.section-title {
+    font-family: var(--grotesk);
+    font-size: var(--fs-title);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+}
+
+/* A hairline rule with a short accent segment, rather than a 2px black bar
+   spanning the full width. */
+.section-divider {
+    height: 1px;
+    background: var(--rule);
+    position: relative;
+    margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+.section-divider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 72px;
+    height: 1px;
+    background: var(--accent);
+}
+
+/* ============================================================
+   Films
+   ============================================================ */
+
+.film-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 1rem + 3vw, 4.5rem);
+}
+
+.film-card {
     display: flex;
     flex-direction: column;
-    gap: 44px;
 }
 
-.service-item {
-    margin-bottom: 20px;
-    text-align: left;
+/* The thumbnail is a facade: YouTube's player is only loaded on click,
+   so the page stays light and no third-party script runs until asked. */
+.film-thumb {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 4px;
+    line-height: 0;
 }
 
-.service-title {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 26px;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 20px;
-    line-height: 1.2;
-    background-color: #E9FFC0;
-    padding: 2px 4px;
-    display: inline-block;
-    text-transform: uppercase;
+.film-thumb img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
 }
 
-.service-caption {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 16px;
+.film-thumb:hover img,
+.film-thumb:focus-visible img {
+    transform: scale(1.03);
+}
+
+.film-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    opacity: 0.9;
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2, 0.6, 0.2, 1);
+    filter: drop-shadow(0 1px 10px rgba(0, 0, 0, 0.3));
+    pointer-events: none;
+}
+
+.film-thumb:hover .film-play,
+.film-thumb:focus-visible .film-play {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.06);
+}
+
+.film-title {
+    font-family: var(--serif);
+    font-size: var(--fs-film);
     font-weight: 400;
-    color: #333;
-    line-height: 1.5;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin: 22px 0 4px;
 }
 
-.caption-first {
-    font-style: italic;
-    font-weight: 500;
+.film-meta {
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
 }
 
+/* ============================================================
+   Collaborations
+   ============================================================ */
 
+.collab-section {
+    padding: 0 var(--gutter);
+    max-width: 1400px;
+    margin: clamp(5rem, 3rem + 8vw, 11rem) auto 0;
+}
 
-/* Tree Painting Section */
+.section-intro {
+    font-family: var(--grotesk);
+    font-size: var(--fs-body);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: min(38rem, 100%);
+    margin-bottom: clamp(2.5rem, 1.5rem + 2vw, 3.5rem);
+}
+
+.collab-grid {
+    display: grid;
+    /* 140px keeps two tiles per row on a narrow phone rather than a long
+       single-file stack, and still resolves to one row on desktop. */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: clamp(1rem, 0.6rem + 1.2vw, 1.75rem);
+}
+
+/* These logos arrive at wildly different aspect ratios — from 4:1
+   wordmarks to squares, on both light and dark grounds. A fixed-ratio
+   frame with contain-fit normalizes them without cropping any wordmark,
+   and the resting grayscale pass keeps five unrelated brand palettes
+   from fighting each other. */
+.collab-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 3 / 2;
+    padding: 12%;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.collab-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.72;
+    transition: filter 0.4s ease, opacity 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+.collab-name {
+    display: block;
+    margin-top: 12px;
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+}
+
+/* Applied by JS only once a tile has a link to open */
+.collab-tile.is-interactive {
+    cursor: pointer;
+}
+
+.collab-tile.is-interactive .collab-frame {
+    position: relative;
+}
+
+.collab-tile.is-interactive:hover img,
+.collab-tile.is-interactive:focus-visible img {
+    filter: grayscale(0);
+    opacity: 1;
+    transform: scale(1.04);
+}
+
+.collab-tile.is-interactive .collab-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 22, 16, 0.42) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 64 64' fill='none'%3E%3Ccircle cx='32' cy='32' r='31' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M26 21L44 32L26 43V21Z' fill='white'/%3E%3C/svg%3E") center / 44px no-repeat;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.collab-tile.is-interactive:hover .collab-frame::after,
+.collab-tile.is-interactive:focus-visible .collab-frame::after {
+    opacity: 1;
+}
+
+/* ============================================================
+   Links
+   ============================================================ */
+
+.music-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-top: clamp(3rem, 2rem + 3vw, 5rem);
+}
+
+.music-links a {
+    position: relative;
+    font-size: var(--fs-body);
+    color: var(--ink);
+    text-decoration: none;
+    padding-bottom: 4px;
+}
+
+.music-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--rule);
+    transition: height 0.25s ease, background-color 0.25s ease;
+}
+
+.music-links a:hover::after {
+    height: 6px;
+    background: var(--lime);
+}
+
+/* ============================================================
+   Video Lightbox
+   ============================================================ */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 0.4rem + 2.5vw, 2.5rem);
+    background: rgba(18, 22, 16, 0.94);
+    animation: lightboxIn 0.3s ease-out;
+}
+
+.lightbox[hidden] {
+    display: none;
+}
+
+@keyframes lightboxIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.lightbox-frame {
+    width: min(100%, 1100px);
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* Instagram embeds are portrait and set their own card chrome, so the
+   frame follows the post rather than a 16:9 video. */
+.lightbox-frame.is-portrait {
+    width: min(100%, 420px);
+    aspect-ratio: auto;
+    height: min(88vh, 720px);
+    background: transparent;
+}
+
+.lightbox-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    font-size: 32px;
+    line-height: 1;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity 0.3s ease;
+}
+
+.lightbox-close:hover {
+    opacity: 1;
+}
+
+/* ============================================================
+   Tree Painting Section
+   ============================================================ */
+
 .tree-painting-section {
-    padding: 120px 20px;
-    margin-top: 120px;
+    padding: clamp(4rem, 2rem + 6vw, 8rem) 20px;
+    margin-top: clamp(4rem, 2rem + 6vw, 8rem);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -255,20 +585,6 @@ body {
     z-index: -1;
 }
 
-/* Footer */
-.footer {
-    text-align: center;
-    padding: 40px 20px;
-    margin-top: 0;
-}
-
-.copyright {
-    font-family: 'Instrument Serif', serif;
-    font-size: 16px;
-    color: #333;
-    margin: 0;
-}
-
 .container {
     max-width: 1000px;
     width: 100%;
@@ -285,16 +601,12 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #2d5016;
-    font-family: 'Instrument Serif', serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 2px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(45deg, #2d5016, #4a7c3c, #689f38);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: var(--sans);
+    font-size: var(--fs-small);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-soft);
     pointer-events: none;
     z-index: 10;
     opacity: 1;
@@ -327,7 +639,10 @@ body {
     z-index: 1;
 }
 
-/* Audio Toggle Button */
+/* ============================================================
+   Audio Toggle
+   ============================================================ */
+
 .audio-toggle {
     width: 36px;
     height: 36px;
@@ -336,14 +651,15 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: opacity 0.3s ease;
+    color: var(--ink);
 }
 
 .audio-toggle:hover {
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 .audio-toggle svg {
-    color: #333;
+    color: currentColor;
     transition: all 0.3s ease;
 }
 
@@ -353,188 +669,79 @@ body {
 }
 
 .audio-toggle.muted svg {
-    color: #999;
+    color: var(--ink-soft);
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .hero-title {
-        font-size: 88px;
-    }
-    
-    .hero-caption {
-        font-size: 18px;
-        padding: 2px 4px;
-    }
-    
-    .service-title {
-        font-size: 20px;
-    }
-    
-    .service-caption {
-        font-size: 13px;
-    }
-    
-    .caption-first {
-        font-style: italic;
-        font-weight: 500;
-    }
-    
-    .hero-bg-image.img1, .hero-bg-image.img2, .hero-bg-image.img3,
-    .hero-bg-image.img4, .hero-bg-image.img5, .hero-bg-image.img6 {
-        width: 50px;
-    }
-    
-    .trail-image {
-        width: 90px;
-    }
-    
-    .tree-painting-section {
-        padding: 96px 20px;
-    }
+/* ============================================================
+   Footer
+   ============================================================ */
+
+.footer {
+    text-align: center;
+    padding: 48px var(--gutter);
 }
 
-@media (max-width: 968px) {
-    .main-header {
-        font-size: 27px;
-        padding: 30px 40px;
-    }
-    
-    .services-content {
+.copyright {
+    font-size: var(--fs-small);
+    color: var(--ink-soft);
+}
+
+/* ============================================================
+   Responsive — layout only; type scales fluidly above
+   ============================================================ */
+
+@media (max-width: 900px) {
+    .film-grid {
         grid-template-columns: 1fr;
-        gap: 60px;
+        gap: 3rem;
     }
-    
-    .services-section {
-        padding: 80px 40px;
-    }
-    
-    .hero-title {
-        font-size: 76px;
-    }
-    
-    .hero-caption {
-        font-size: 14px;
-        padding: 2px 4px;
-    }
-    
-    .tree-painting-section {
-        padding: 84px 20px;
-    }
-}
 
-@media (max-width: 768px) {
-    .main-header {
-        font-size: 21px;
-        padding: 20px 30px;
-    }
-    
-    .hero-section {
-        padding: 60px 30px;
-    }
-    
-    .hero-title {
-        font-size: 64px;
-    }
-    
-    .hero-caption {
-        font-size: 12px;
-        padding: 2px 4px;
-    }
-    
-    .services-title {
-        font-size: 24px;
-    }
-    
-    .service-title {
-        font-size: 14px;
-    }
-    
-    .service-caption {
-        font-size: 10px;
-    }
-    
-    .caption-first {
-        font-style: italic;
-        font-weight: 500;
-    }
-    
-
-    
-    .hero-bg-image {
-        opacity: 0.4;
-    }
-    
     .hero-bg-image.img1, .hero-bg-image.img2, .hero-bg-image.img3,
     .hero-bg-image.img4, .hero-bg-image.img5, .hero-bg-image.img6 {
-        width: 20px;
+        width: 44px;
     }
-    
+
     .trail-image {
         width: 76px;
     }
-    
-    .tree-painting-section {
-        padding: 78px 20px;
-    }
-
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .main-header {
-        font-size: 15px;
-        padding: 15px 20px;
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
+        padding: 20px var(--gutter);
     }
-    
-    .hero-title {
-        font-size: 58px;
-    }
-    
-    .hero-caption {
-        font-size: 9px;
-        padding: 2px 4px;
-    }
-    
-    .services-section {
-        padding: 60px 20px;
-    }
-    
-    .services-title {
-        font-size: 18px;
-    }
-    
-    .service-title {
-        font-size: 14px;
-    }
-    
-    .service-caption {
-        font-size: 10px;
-    }
-    
-    .caption-first {
-        font-style: italic;
-        font-weight: 500;
-    }
-    
 
-    
-    .hero-bg-image {
-        opacity: 0.3;
+    .image-pair {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
     }
-    
+
+    .hero-bg-image {
+        opacity: 0.4;
+    }
+
     .hero-bg-image.img1, .hero-bg-image.img2, .hero-bg-image.img3,
     .hero-bg-image.img4, .hero-bg-image.img5, .hero-bg-image.img6 {
-        width: 20px;
+        width: 28px;
     }
-    
+
     .trail-image {
         width: 60px;
     }
-    
-    .tree-painting-section {
-        padding: 72px 20px;
+
+    .music-links {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
     }
-} 
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

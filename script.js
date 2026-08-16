@@ -38,9 +38,12 @@ class HeroMouseTrail {
         
         const trailImage = document.createElement('img');
         trailImage.src = randomAsset;
+        trailImage.alt = '';
         trailImage.className = 'trail-image';
-        trailImage.style.left = (x - 45) + 'px'; // Center the 90px image
-        trailImage.style.top = (y - 45) + 'px';
+        // Centering happens in CSS via translate(-50%, -50%), so this stays
+        // accurate at every breakpoint where the leaf size changes.
+        trailImage.style.left = x + 'px';
+        trailImage.style.top = y + 'px';
         
         this.heroSection.appendChild(trailImage);
         
@@ -76,8 +79,6 @@ class RevealPainter {
         this.initialAnimationDuration = 3000; // 3 seconds for complete formation
         
         this.loadImage();
-        this.bindEvents();
-        this.startFadeOutLoop();
     }
     
     loadImage() {
@@ -426,14 +427,117 @@ class RevealPainter {
     }
 }
 
+// Lightbox - loads the embedded player only when something is opened
+class FilmLightbox {
+    constructor() {
+        this.lightbox = document.getElementById('lightbox');
+        this.frame = document.getElementById('lightboxFrame');
+        this.closeBtn = document.getElementById('lightboxClose');
+        this.lastFocused = null;
+
+        if (!this.lightbox || !this.frame) return;
+
+        document.querySelectorAll('.film-thumb').forEach(thumb => {
+            thumb.addEventListener('click', () => this.open(thumb));
+        });
+
+        // Collab tiles only become interactive once they have a link.
+        // Tiles with an empty data-instagram-url stay inert.
+        document.querySelectorAll('.collab-tile').forEach(tile => {
+            if (!tile.dataset.instagramUrl) return;
+
+            tile.classList.add('is-interactive');
+            tile.setAttribute('role', 'button');
+            tile.setAttribute('tabindex', '0');
+            tile.setAttribute('aria-label', `Play video with ${tile.dataset.collabName || 'this collaborator'}`);
+
+            tile.addEventListener('click', () => this.open(tile));
+            tile.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.open(tile);
+                }
+            });
+        });
+
+        this.closeBtn.addEventListener('click', () => this.close());
+
+        // Click the backdrop (but not the video itself) to dismiss
+        this.lightbox.addEventListener('click', (e) => {
+            if (e.target === this.lightbox) this.close();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !this.lightbox.hidden) this.close();
+        });
+    }
+
+    open(trigger) {
+        const { videoId, instagramUrl } = trigger.dataset;
+        const iframe = document.createElement('iframe');
+        const isInstagram = Boolean(instagramUrl);
+
+        if (videoId) {
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+            iframe.title = trigger.dataset.videoTitle || 'Video player';
+        } else if (isInstagram) {
+            // Instagram serves a player at /embed on any post permalink
+            iframe.src = instagramUrl.replace(/\/?(\?.*)?$/, '/') + 'embed';
+            iframe.title = `${trigger.dataset.collabName || 'Collaboration'} on Instagram`;
+            iframe.scrolling = 'no';
+        } else {
+            return;
+        }
+
+        this.lastFocused = trigger;
+
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+
+        this.frame.classList.toggle('is-portrait', isInstagram);
+        this.frame.replaceChildren(iframe);
+        this.lightbox.hidden = false;
+        document.body.style.overflow = 'hidden';
+        this.closeBtn.focus();
+    }
+
+    close() {
+        this.lightbox.hidden = true;
+        // Removing the iframe is what actually stops playback
+        this.frame.replaceChildren();
+        this.frame.classList.remove('is-portrait');
+        document.body.style.overflow = '';
+
+        if (this.lastFocused) {
+            this.lastFocused.focus();
+            this.lastFocused = null;
+        }
+    }
+}
+
 // Initialize the reveal painter when the page loads
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Initializing Tree of Life Reveal Painter...');
-    new RevealPainter();
-    
-    // Initialize audio functionality
-    initializeAudio();
-    
+    // Each feature is isolated so a failure in one cannot stop the others
+    // from initializing (this is what previously killed the audio toggle).
+    try {
+        console.log('Initializing Tree of Life Reveal Painter...');
+        new RevealPainter();
+    } catch (error) {
+        console.error('RevealPainter failed to initialize:', error);
+    }
+
+    try {
+        initializeAudio();
+    } catch (error) {
+        console.error('Audio failed to initialize:', error);
+    }
+
+    try {
+        new FilmLightbox();
+    } catch (error) {
+        console.error('FilmLightbox failed to initialize:', error);
+    }
+
     // Scroll to top on page load
     window.scrollTo(0, 0);
 });
@@ -479,10 +583,10 @@ function initializeAudio() {
             audioToggle.classList.add('muted');
             soundWaves.style.opacity = '0.3';
         }
+        audioToggle.setAttribute('aria-pressed', String(isPlaying));
     };
-    
-    // Toggle audio on button click
-    audioToggle.addEventListener('click', async () => {
+
+    const toggleAudio = async () => {
         if (isPlaying) {
             audio.pause();
             isPlaying = false;
@@ -498,6 +602,15 @@ function initializeAudio() {
             }
         }
         updateToggleButton();
+    };
+
+    audioToggle.addEventListener('click', toggleAudio);
+
+    audioToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleAudio();
+        }
     });
     
     // Handle audio events
