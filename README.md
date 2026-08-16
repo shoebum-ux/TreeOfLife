@@ -18,12 +18,7 @@ Assets/music/   # YouTube thumbnails for the featured films
 
 **Hero** — Leaves trail the cursor across the landing area. `HeroMouseTrail` drops a random PNG from `Assets/` every 150ms, each fading out over 2s. Centering is handled in CSS (`translate(-50%, -50%)`) so it stays accurate at every breakpoint.
 
-**Live Music** — Two featured films and four short pieces.
-
-- Films use a *facade*: a local thumbnail is shown, and YouTube's player is only injected when clicked, so no third-party script loads on page view. Handled by `FilmLightbox`, which closes on Escape, backdrop click, or the close button, and removes the iframe to stop playback.
-- Short pieces are official Instagram embeds via `embed.js`. Instagram enforces a 326px minimum iframe width, which is why the grid is two columns rather than four.
-
-**Studio** — Design services, with a looping video.
+**Live Music** — The featured films. Each uses a *facade*: a local thumbnail is shown, and YouTube's player is only injected when clicked, so no third-party script loads on page view. Handled by `FilmLightbox`, which closes on Escape, backdrop click, or the close button, and removes the iframe to stop playback.
 
 **Tree of Life** — The signature interaction. Two stacked canvases: `baseCanvas` builds a faint watercolor tree from 150 bleeding blobs over 3 seconds, then `revealCanvas` paints full color in under the cursor using five offset bleed rings per stroke. An IntersectionObserver resets it when scrolled out of view so it re-blooms on each visit. Double-click restarts the animation.
 
@@ -35,9 +30,13 @@ Assets/music/   # YouTube thumbnails for the featured films
    `curl -o "Assets/music/<videoId>.jpg" "https://i.ytimg.com/vi/<videoId>/maxresdefault.jpg"`
 2. Copy a `.film-card` block in `index.html` and update `data-video-id`, `data-video-title`, the `img` src and alt, plus the title and meta line.
 
-## Adding a reel
+## Type and color
 
-Copy a `blockquote.instagram-media` in the `.reel-grid` and change `data-instgrm-permalink` to the post URL. `embed.js` renders the rest.
+Both live as custom properties at the top of `style.css`.
+
+Type is **fluid** — every size is a `clamp()` that interpolates with the viewport, so there are no per-breakpoint font-size rules and nothing collapses to an unreadable size on a phone. Change `--fs-display`, `--fs-title`, and friends to retune the whole scale. Media queries handle layout only.
+
+Lime (`--lime`) is a brand accent, not a background. It appears as the marker underline behind `<mark>`, on link hover, and in text selection. `--accent` is a deeper leaf green for small structural marks — the segment on the section rule, focus rings — where lime is too pale to read against paper.
 
 ## Local development
 

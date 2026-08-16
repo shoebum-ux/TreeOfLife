@@ -1,4 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@100;300;400&display=swap');
+/* ============================================================
+   Studio Kudrat — design tokens
+   ============================================================ */
+
+:root {
+    /* Warm paper rather than pure white — softer, and closer to the
+       watercolor work the site is built around. */
+    --paper: #FCFBF7;
+    --ink: #1E241B;
+    --ink-soft: #5A6155;
+    --rule: rgba(30, 36, 27, 0.16);
+
+    /* Lime is the brand mark, used sparingly. Leaf green carries the
+       small structural accents where lime is too pale to read. */
+    --lime: #E9FFC0;
+    --accent: #7FA653;
+
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Fluid type — each size interpolates with the viewport, so there are
+       no separate font-size rules per breakpoint and nothing collapses to
+       an unreadable 9px on a phone. */
+    --fs-display: clamp(2.75rem, 1.15rem + 5.9vw, 6.25rem);
+    --fs-lead:    clamp(1.125rem, 1.02rem + 0.42vw, 1.5rem);
+    --fs-title:   clamp(1.75rem, 1.5rem + 1.0vw, 2.5rem);
+    --fs-film:    clamp(1.5rem, 1.35rem + 0.6vw, 2rem);
+    --fs-body:    clamp(1rem, 0.97rem + 0.14vw, 1.0625rem);
+    --fs-small:   clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+
+    --gutter: clamp(1.5rem, 0.6rem + 3.6vw, 3.75rem);
+}
 
 * {
     margin: 0;
@@ -7,30 +38,50 @@
 }
 
 body {
-    font-family: 'Instrument Serif', serif;
-    background: white;
+    font-family: var(--sans);
+    font-size: var(--fs-body);
+    line-height: 1.6;
+    background: var(--paper);
     min-height: 100vh;
-    color: #333;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Header Section */
+::selection {
+    background: var(--lime);
+    color: var(--ink);
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+/* The marker highlight: a gradient filling only the lower portion of the
+   line, so it reads as a hand-drawn accent instead of a filled label. */
+mark {
+    background: linear-gradient(to top, var(--lime) 0 0.42em, transparent 0.42em);
+    color: inherit;
+    padding: 0 0.08em;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+
 .main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 60px;
-    font-family: 'Instrument Serif', serif;
-    font-size: 36px;
-    color: #333;
-}
-
-.header-left, .header-right {
-    font-weight: 400;
+    padding: 32px var(--gutter);
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.75rem);
 }
 
 .header-left {
     color: inherit;
     text-decoration: none;
+    letter-spacing: -0.01em;
 }
 
 .header-right {
@@ -39,31 +90,24 @@ body {
     gap: 20px;
 }
 
-.site-nav {
-    display: flex;
-    align-items: center;
-    gap: 18px;
+.header-label {
+    font-family: var(--sans);
+    font-size: var(--fs-small);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
 }
 
-.site-nav a {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 15px;
-    color: #333;
-    text-decoration: none;
-    padding: 2px 4px;
-    transition: background-color 0.3s ease;
-}
+/* ============================================================
+   Hero
+   ============================================================ */
 
-.site-nav a:hover {
-    background-color: #E9FFC0;
-}
-
-/* Hero Section */
 .hero-section {
     text-align: center;
-    padding: 80px 40px;
+    padding: clamp(3rem, 1rem + 7vw, 7rem) var(--gutter);
     max-width: 1400px;
-    margin: 80px auto 0;
+    margin: clamp(2rem, 1rem + 4vw, 5rem) auto 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,26 +118,24 @@ body {
 }
 
 .hero-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 104px;
+    font-family: var(--serif);
+    font-size: var(--fs-display);
     font-weight: 400;
-    line-height: 1.1;
-    color: #333;
-    margin-bottom: 60px;
-    letter-spacing: -2px;
+    line-height: 1.04;
+    letter-spacing: -0.022em;
+    margin-bottom: clamp(1.75rem, 1rem + 2vw, 3rem);
+    text-wrap: balance;
 }
 
 .hero-caption {
-    font-family: 'Instrument Serif', serif;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 1.4;
-    color: #333;
-    max-width: 1200px;
-    background-color: #E9FFC0;
-    padding: 2px 4px;
-    display: inline-block;
-    text-align: center;
+    font-family: var(--serif);
+    font-size: var(--fs-lead);
+    line-height: 1.45;
+    color: var(--ink-soft);
+    /* A measure limit keeps the line length readable instead of letting it
+       run the full 1400px. */
+    max-width: 34ch;
+    text-wrap: balance;
 }
 
 /* Hero Background Images */
@@ -108,41 +150,12 @@ body {
     transform: scale(1.1);
 }
 
-.hero-bg-image.img1 {
-    top: 5%;
-    left: 2%;
-    width: 80px;
-}
-
-.hero-bg-image.img2 {
-    top: 8%;
-    right: 3%;
-    width: 60px;
-}
-
-.hero-bg-image.img3 {
-    bottom: 5%;
-    left: 5%;
-    width: 70px;
-}
-
-.hero-bg-image.img4 {
-    top: 15%;
-    right: 25%;
-    width: 50px;
-}
-
-.hero-bg-image.img5 {
-    bottom: 8%;
-    right: 3%;
-    width: 75px;
-}
-
-.hero-bg-image.img6 {
-    top: 12%;
-    left: 25%;
-    width: 65px;
-}
+.hero-bg-image.img1 { top: 5%;    left: 2%;   width: 80px; }
+.hero-bg-image.img2 { top: 8%;    right: 3%;  width: 60px; }
+.hero-bg-image.img3 { bottom: 5%; left: 5%;   width: 70px; }
+.hero-bg-image.img4 { top: 15%;   right: 25%; width: 50px; }
+.hero-bg-image.img5 { bottom: 8%; right: 3%;  width: 75px; }
+.hero-bg-image.img6 { top: 12%;   left: 25%;  width: 65px; }
 
 /* Mouse Trail Effect */
 .trail-image {
@@ -172,30 +185,61 @@ body {
     }
 }
 
-/* Music Section */
+/* ============================================================
+   Section chrome
+   ============================================================ */
+
 .music-section {
-    padding: 100px 60px 0;
-    max-width: 1600px;
-    margin: 120px auto 0;
+    padding: 0 var(--gutter);
+    max-width: 1400px;
+    margin: clamp(5rem, 3rem + 8vw, 11rem) auto 0;
 }
 
-.subsection-title {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 20px;
+.eyebrow {
+    font-size: var(--fs-small);
     font-weight: 500;
-    color: #333;
     text-transform: uppercase;
-    background-color: #E9FFC0;
-    padding: 2px 4px;
-    display: inline-block;
-    margin: 100px 0 40px;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
 }
 
-/* Featured films */
+.section-title {
+    font-family: var(--serif);
+    font-size: var(--fs-title);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin-bottom: 28px;
+}
+
+/* A hairline rule with a short accent segment, rather than a 2px black bar
+   spanning the full width. */
+.section-divider {
+    height: 1px;
+    background: var(--rule);
+    position: relative;
+    margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+.section-divider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 72px;
+    height: 1px;
+    background: var(--accent);
+}
+
+/* ============================================================
+   Films
+   ============================================================ */
+
 .film-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: clamp(2rem, 1rem + 3vw, 4.5rem);
 }
 
 .film-card {
@@ -214,7 +258,7 @@ body {
     background: none;
     cursor: pointer;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 4px;
     line-height: 0;
 }
 
@@ -223,15 +267,12 @@ body {
     height: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: 8px;
-    transition: transform 0.6s ease, filter 0.6s ease;
-    filter: saturate(0.92);
+    transition: transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
 }
 
 .film-thumb:hover img,
 .film-thumb:focus-visible img {
-    transform: scale(1.04);
-    filter: saturate(1.05);
+    transform: scale(1.03);
 }
 
 .film-play {
@@ -240,78 +281,73 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
-    opacity: 0.85;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.35));
+    opacity: 0.9;
+    transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2, 0.6, 0.2, 1);
+    filter: drop-shadow(0 1px 10px rgba(0, 0, 0, 0.3));
     pointer-events: none;
 }
 
 .film-thumb:hover .film-play,
 .film-thumb:focus-visible .film-play {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.08);
+    transform: translate(-50%, -50%) scale(1.06);
 }
 
 .film-title {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 26px;
-    font-weight: 500;
-    color: #333;
-    text-transform: uppercase;
-    background-color: #E9FFC0;
-    padding: 2px 4px;
-    display: inline-block;
-    align-self: flex-start;
-    margin: 24px 0 10px;
+    font-family: var(--serif);
+    font-size: var(--fs-film);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin: 22px 0 4px;
 }
 
 .film-meta {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-size: 18px;
-    color: #333;
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
 }
 
-/* Instagram embeds — the official embed.js rewrites each blockquote into
-   an iframe, so widths are constrained here rather than on the child. */
-.reel-grid {
-    display: grid;
-    /* Two up rather than four: Instagram's iframe enforces a 326px minimum,
-       so four columns would overflow before the cards could shrink. */
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px;
-    max-width: 1140px;
-    align-items: start;
-}
-
-.reel-grid .instagram-media {
-    min-width: 0 !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 !important;
-}
+/* ============================================================
+   Links
+   ============================================================ */
 
 .music-links {
     display: flex;
-    gap: 28px;
-    margin-top: 60px;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin-top: clamp(3rem, 2rem + 3vw, 5rem);
 }
 
 .music-links a {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 16px;
-    color: #333;
+    position: relative;
+    font-size: var(--fs-body);
+    color: var(--ink);
     text-decoration: none;
-    border-bottom: 1px solid #333;
-    padding-bottom: 2px;
-    transition: background-color 0.3s ease;
+    padding-bottom: 4px;
 }
 
-.music-links a:hover {
-    background-color: #E9FFC0;
+.music-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--rule);
+    transition: height 0.25s ease, background-color 0.25s ease;
 }
 
-/* Video Lightbox */
+.music-links a:hover::after {
+    height: 6px;
+    background: var(--lime);
+}
+
+/* ============================================================
+   Video Lightbox
+   ============================================================ */
+
 .lightbox {
     position: fixed;
     inset: 0;
@@ -319,8 +355,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
-    background: rgba(20, 24, 18, 0.92);
+    padding: clamp(1rem, 0.4rem + 2.5vw, 2.5rem);
+    background: rgba(18, 22, 16, 0.94);
     animation: lightboxIn 0.3s ease-out;
 }
 
@@ -337,7 +373,7 @@ body {
     width: min(100%, 1100px);
     aspect-ratio: 16 / 9;
     background: #000;
-    border-radius: 8px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -350,17 +386,17 @@ body {
 
 .lightbox-close {
     position: absolute;
-    top: 24px;
-    right: 32px;
-    width: 48px;
-    height: 48px;
-    font-size: 36px;
+    top: 20px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    font-size: 32px;
     line-height: 1;
     color: #fff;
     background: none;
     border: none;
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 0.75;
     transition: opacity 0.3s ease;
 }
 
@@ -368,102 +404,13 @@ body {
     opacity: 1;
 }
 
-/* Services Section */
-.services-section {
-    padding: 100px 60px;
-    max-width: 1600px;
-    margin: 120px auto 0;
-}
+/* ============================================================
+   Tree Painting Section
+   ============================================================ */
 
-/* Shared section chrome — used by both Music and Studio */
-.section-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 36px;
-    font-weight: 400;
-    color: #333;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-}
-
-.section-divider {
-    height: 2px;
-    background-color: #333;
-    margin-bottom: 80px;
-}
-
-.section-intro {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
-    max-width: 620px;
-    margin-bottom: 60px;
-}
-
-.services-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-}
-
-.services-video {
-    width: 100%;
-    border-radius: 8px;
-    margin-top: -170px;
-}
-
-.services-video video {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
-    transform: scale(0.75);
-}
-
-.services-text {
-    display: flex;
-    flex-direction: column;
-    gap: 44px;
-}
-
-.service-item {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.service-title {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 26px;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 20px;
-    line-height: 1.2;
-    background-color: #E9FFC0;
-    padding: 2px 4px;
-    display: inline-block;
-    text-transform: uppercase;
-}
-
-.service-caption {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    color: #333;
-    line-height: 1.5;
-}
-
-.caption-first {
-    font-style: italic;
-    font-weight: 500;
-}
-
-
-
-/* Tree Painting Section */
 .tree-painting-section {
-    padding: 120px 20px;
-    margin-top: 120px;
+    padding: clamp(4rem, 2rem + 6vw, 8rem) 20px;
+    margin-top: clamp(4rem, 2rem + 6vw, 8rem);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -485,20 +432,6 @@ body {
     z-index: -1;
 }
 
-/* Footer */
-.footer {
-    text-align: center;
-    padding: 40px 20px;
-    margin-top: 0;
-}
-
-.copyright {
-    font-family: 'Instrument Serif', serif;
-    font-size: 16px;
-    color: #333;
-    margin: 0;
-}
-
 .container {
     max-width: 1000px;
     width: 100%;
@@ -515,16 +448,12 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #2d5016;
-    font-family: 'Instrument Serif', serif;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 2px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(45deg, #2d5016, #4a7c3c, #689f38);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: var(--sans);
+    font-size: var(--fs-small);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--ink-soft);
     pointer-events: none;
     z-index: 10;
     opacity: 1;
@@ -557,7 +486,10 @@ body {
     z-index: 1;
 }
 
-/* Audio Toggle Button */
+/* ============================================================
+   Audio Toggle
+   ============================================================ */
+
 .audio-toggle {
     width: 36px;
     height: 36px;
@@ -566,14 +498,15 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: opacity 0.3s ease;
+    color: var(--ink);
 }
 
 .audio-toggle:hover {
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 .audio-toggle svg {
-    color: #333;
+    color: currentColor;
     transition: all 0.3s ease;
 }
 
@@ -583,234 +516,74 @@ body {
 }
 
 .audio-toggle.muted svg {
-    color: #999;
+    color: var(--ink-soft);
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .hero-title {
-        font-size: 88px;
-    }
-    
-    .hero-caption {
-        font-size: 18px;
-        padding: 2px 4px;
-    }
-    
-    .service-title {
-        font-size: 20px;
-    }
-    
-    .service-caption {
-        font-size: 13px;
-    }
-    
-    .caption-first {
-        font-style: italic;
-        font-weight: 500;
-    }
-    
-    .hero-bg-image.img1, .hero-bg-image.img2, .hero-bg-image.img3,
-    .hero-bg-image.img4, .hero-bg-image.img5, .hero-bg-image.img6 {
-        width: 50px;
-    }
-    
-    .trail-image {
-        width: 90px;
-    }
-    
-    .tree-painting-section {
-        padding: 96px 20px;
-    }
+/* ============================================================
+   Footer
+   ============================================================ */
+
+.footer {
+    text-align: center;
+    padding: 48px var(--gutter);
 }
 
-@media (max-width: 968px) {
-    .main-header {
-        font-size: 27px;
-        padding: 30px 40px;
-    }
-    
-    .services-content {
-        grid-template-columns: 1fr;
-        gap: 60px;
-    }
+.copyright {
+    font-size: var(--fs-small);
+    color: var(--ink-soft);
+}
 
-    .services-section {
-        padding: 80px 40px;
-    }
+/* ============================================================
+   Responsive — layout only; type scales fluidly above
+   ============================================================ */
 
-    .music-section {
-        padding: 80px 40px 0;
-    }
-
+@media (max-width: 900px) {
     .film-grid {
         grid-template-columns: 1fr;
-        gap: 50px;
+        gap: 3rem;
     }
 
-    .reel-grid {
-        grid-template-columns: 1fr;
-        justify-items: center;
-    }
-
-    .hero-title {
-        font-size: 76px;
-    }
-    
-    .hero-caption {
-        font-size: 14px;
-        padding: 2px 4px;
-    }
-    
-    .tree-painting-section {
-        padding: 84px 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .main-header {
-        font-size: 21px;
-        padding: 20px 30px;
-    }
-    
-    .hero-section {
-        padding: 60px 30px;
-    }
-    
-    .hero-title {
-        font-size: 64px;
-    }
-    
-    .hero-caption {
-        font-size: 12px;
-        padding: 2px 4px;
-    }
-    
-    .section-title {
-        font-size: 24px;
-    }
-
-    .subsection-title {
-        font-size: 16px;
-        margin: 70px 0 30px;
-    }
-
-    .film-title {
-        font-size: 20px;
-    }
-
-    .film-meta {
-        font-size: 15px;
-    }
-
-    .lightbox {
-        padding: 20px;
-    }
-
-    .lightbox-close {
-        top: 12px;
-        right: 16px;
-    }
-
-    .service-title {
-        font-size: 14px;
-    }
-    
-    .service-caption {
-        font-size: 10px;
-    }
-    
-    .caption-first {
-        font-style: italic;
-        font-weight: 500;
-    }
-    
-
-    
-    .hero-bg-image {
-        opacity: 0.4;
-    }
-    
     .hero-bg-image.img1, .hero-bg-image.img2, .hero-bg-image.img3,
     .hero-bg-image.img4, .hero-bg-image.img5, .hero-bg-image.img6 {
-        width: 20px;
+        width: 44px;
     }
-    
+
     .trail-image {
         width: 76px;
     }
-    
-    .tree-painting-section {
-        padding: 78px 20px;
-    }
-
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
     .main-header {
-        font-size: 15px;
-        padding: 15px 20px;
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    .hero-title {
-        font-size: 58px;
-    }
-    
-    .hero-caption {
-        font-size: 9px;
-        padding: 2px 4px;
-    }
-    
-    .services-section {
-        padding: 60px 20px;
+        padding: 20px var(--gutter);
     }
 
-    .music-section {
-        padding: 60px 20px 0;
+    .hero-bg-image {
+        opacity: 0.4;
     }
 
-    .section-title {
-        font-size: 18px;
+    .hero-bg-image.img1, .hero-bg-image.img2, .hero-bg-image.img3,
+    .hero-bg-image.img4, .hero-bg-image.img5, .hero-bg-image.img6 {
+        width: 28px;
+    }
+
+    .trail-image {
+        width: 60px;
     }
 
     .music-links {
         flex-direction: column;
-        gap: 14px;
+        gap: 16px;
         align-items: flex-start;
     }
-    
-    .service-title {
-        font-size: 14px;
-    }
-    
-    .service-caption {
-        font-size: 10px;
-    }
-    
-    .caption-first {
-        font-style: italic;
-        font-weight: 500;
-    }
-    
+}
 
-    
-    .hero-bg-image {
-        opacity: 0.3;
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
-    
-    .hero-bg-image.img1, .hero-bg-image.img2, .hero-bg-image.img3,
-    .hero-bg-image.img4, .hero-bg-image.img5, .hero-bg-image.img6 {
-        width: 20px;
-    }
-    
-    .trail-image {
-        width: 60px;
-    }
-    
-    .tree-painting-section {
-        padding: 72px 20px;
-    }
-} 
+}
