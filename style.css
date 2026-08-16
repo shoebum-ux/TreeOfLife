@@ -133,8 +133,9 @@ mark {
     line-height: 1.45;
     color: var(--ink-soft);
     /* A measure limit keeps the line length readable instead of letting it
-       run the full 1400px. */
-    max-width: 34ch;
+       run the full 1400px. Set in rem, not ch — this serif has a narrow
+       zero, so ch units read far smaller than the actual measure. */
+    max-width: min(32rem, 100%);
     text-wrap: balance;
 }
 
@@ -556,6 +557,12 @@ mark {
 @media (max-width: 600px) {
     .main-header {
         padding: 20px var(--gutter);
+    }
+
+    /* The label collides with the wordmark at this width; the hero states
+       the same thing a moment later. */
+    .header-label {
+        display: none;
     }
 
     .hero-bg-image {
