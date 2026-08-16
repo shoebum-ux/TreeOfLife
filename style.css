@@ -17,6 +17,9 @@
 
     --serif: 'Instrument Serif', Georgia, serif;
     --sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Carries the statement and the section headings — a squarer, more
+       mechanical face that nods at the electronic side of the work. */
+    --grotesk: 'Space Grotesk', 'Instrument Sans', sans-serif;
 
     /* Fluid type — each size interpolates with the viewport, so there are
        no separate font-size rules per breakpoint and nothing collapses to
@@ -90,15 +93,6 @@ mark {
     gap: 20px;
 }
 
-.header-label {
-    font-family: var(--sans);
-    font-size: var(--fs-small);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-soft);
-}
-
 /* ============================================================
    Hero
    ============================================================ */
@@ -127,10 +121,8 @@ mark {
     text-wrap: balance;
 }
 
-/* Set in the sans, matching the links — it carries multiple sentences
-   more comfortably than the display serif. */
 .hero-caption {
-    font-family: var(--sans);
+    font-family: var(--grotesk);
     font-size: var(--fs-lead);
     line-height: 1.65;
     color: var(--ink-soft);
@@ -151,6 +143,14 @@ mark {
 
 .hero-signoff {
     text-wrap: balance;
+}
+
+/* Emoji render on their own vendor font, which sits large and low next to
+   the text — nudge them back into line. */
+.emoji {
+    font-size: 0.92em;
+    line-height: 1;
+    vertical-align: -0.04em;
 }
 
 /* Hero Background Images */
@@ -201,6 +201,31 @@ mark {
 }
 
 /* ============================================================
+   Portrait
+   ============================================================ */
+
+.portrait-band {
+    max-width: 1400px;
+    margin: clamp(3rem, 2rem + 5vw, 7rem) auto 0;
+    padding: 0 var(--gutter);
+}
+
+.portrait-band img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+}
+
+.portrait-band figcaption {
+    margin-top: 14px;
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+}
+
+/* ============================================================
    Section chrome
    ============================================================ */
 
@@ -220,11 +245,11 @@ mark {
 }
 
 .section-title {
-    font-family: var(--serif);
+    font-family: var(--grotesk);
     font-size: var(--fs-title);
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.1;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.03em;
     margin-bottom: 28px;
 }
 
@@ -325,6 +350,100 @@ mark {
 }
 
 /* ============================================================
+   Collaborations
+   ============================================================ */
+
+.collab-section {
+    padding: 0 var(--gutter);
+    max-width: 1400px;
+    margin: clamp(5rem, 3rem + 8vw, 11rem) auto 0;
+}
+
+.section-intro {
+    font-family: var(--grotesk);
+    font-size: var(--fs-body);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: min(38rem, 100%);
+    margin-bottom: clamp(2.5rem, 1.5rem + 2vw, 3.5rem);
+}
+
+.collab-grid {
+    display: grid;
+    /* 140px keeps two tiles per row on a narrow phone rather than a long
+       single-file stack, and still resolves to one row on desktop. */
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: clamp(1rem, 0.6rem + 1.2vw, 1.75rem);
+}
+
+/* These logos arrive at wildly different aspect ratios — from 4:1
+   wordmarks to squares, on both light and dark grounds. A fixed-ratio
+   frame with contain-fit normalizes them without cropping any wordmark,
+   and the resting grayscale pass keeps five unrelated brand palettes
+   from fighting each other. */
+.collab-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 3 / 2;
+    padding: 12%;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.collab-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.72;
+    transition: filter 0.4s ease, opacity 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+.collab-name {
+    display: block;
+    margin-top: 12px;
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+}
+
+/* Applied by JS only once a tile has a link to open */
+.collab-tile.is-interactive {
+    cursor: pointer;
+}
+
+.collab-tile.is-interactive .collab-frame {
+    position: relative;
+}
+
+.collab-tile.is-interactive:hover img,
+.collab-tile.is-interactive:focus-visible img {
+    filter: grayscale(0);
+    opacity: 1;
+    transform: scale(1.04);
+}
+
+.collab-tile.is-interactive .collab-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 22, 16, 0.42) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 64 64' fill='none'%3E%3Ccircle cx='32' cy='32' r='31' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M26 21L44 32L26 43V21Z' fill='white'/%3E%3C/svg%3E") center / 44px no-repeat;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.collab-tile.is-interactive:hover .collab-frame::after,
+.collab-tile.is-interactive:focus-visible .collab-frame::after {
+    opacity: 1;
+}
+
+/* ============================================================
    Links
    ============================================================ */
 
@@ -390,6 +509,15 @@ mark {
     background: #000;
     border-radius: 4px;
     overflow: hidden;
+}
+
+/* Instagram embeds are portrait and set their own card chrome, so the
+   frame follows the post rather than a 16:9 video. */
+.lightbox-frame.is-portrait {
+    width: min(100%, 420px);
+    aspect-ratio: auto;
+    height: min(88vh, 720px);
+    background: transparent;
 }
 
 .lightbox-frame iframe {
@@ -571,12 +699,6 @@ mark {
 @media (max-width: 600px) {
     .main-header {
         padding: 20px var(--gutter);
-    }
-
-    /* The label collides with the wordmark at this width; the hero states
-       the same thing a moment later. */
-    .header-label {
-        display: none;
     }
 
     .hero-bg-image {

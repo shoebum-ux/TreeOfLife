@@ -427,7 +427,7 @@ class RevealPainter {
     }
 }
 
-// Film Lightbox - loads the YouTube player only when a film is opened
+// Lightbox - loads the embedded player only when something is opened
 class FilmLightbox {
     constructor() {
         this.lightbox = document.getElementById('lightbox');
@@ -439,6 +439,25 @@ class FilmLightbox {
 
         document.querySelectorAll('.film-thumb').forEach(thumb => {
             thumb.addEventListener('click', () => this.open(thumb));
+        });
+
+        // Collab tiles only become interactive once they have a link.
+        // Tiles with an empty data-instagram-url stay inert.
+        document.querySelectorAll('.collab-tile').forEach(tile => {
+            if (!tile.dataset.instagramUrl) return;
+
+            tile.classList.add('is-interactive');
+            tile.setAttribute('role', 'button');
+            tile.setAttribute('tabindex', '0');
+            tile.setAttribute('aria-label', `Play video with ${tile.dataset.collabName || 'this collaborator'}`);
+
+            tile.addEventListener('click', () => this.open(tile));
+            tile.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.open(tile);
+                }
+            });
         });
 
         this.closeBtn.addEventListener('click', () => this.close());
@@ -453,18 +472,29 @@ class FilmLightbox {
         });
     }
 
-    open(thumb) {
-        const videoId = thumb.dataset.videoId;
-        if (!videoId) return;
-
-        this.lastFocused = thumb;
-
+    open(trigger) {
+        const { videoId, instagramUrl } = trigger.dataset;
         const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
-        iframe.title = thumb.dataset.videoTitle || 'Video player';
+        const isInstagram = Boolean(instagramUrl);
+
+        if (videoId) {
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+            iframe.title = trigger.dataset.videoTitle || 'Video player';
+        } else if (isInstagram) {
+            // Instagram serves a player at /embed on any post permalink
+            iframe.src = instagramUrl.replace(/\/?(\?.*)?$/, '/') + 'embed';
+            iframe.title = `${trigger.dataset.collabName || 'Collaboration'} on Instagram`;
+            iframe.scrolling = 'no';
+        } else {
+            return;
+        }
+
+        this.lastFocused = trigger;
+
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
         iframe.allowFullscreen = true;
 
+        this.frame.classList.toggle('is-portrait', isInstagram);
         this.frame.replaceChildren(iframe);
         this.lightbox.hidden = false;
         document.body.style.overflow = 'hidden';
@@ -475,6 +505,7 @@ class FilmLightbox {
         this.lightbox.hidden = true;
         // Removing the iframe is what actually stops playback
         this.frame.replaceChildren();
+        this.frame.classList.remove('is-portrait');
         document.body.style.overflow = '';
 
         if (this.lastFocused) {

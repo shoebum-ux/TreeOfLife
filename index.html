@@ -17,7 +17,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -31,7 +31,6 @@
     <header class="main-header">
         <a class="header-left" href="#top">Studio Kudrat</a>
         <div class="header-right">
-            <span class="header-label">Live Electronic Music</span>
             <!-- Speaker Toggle -->
             <div class="audio-toggle" id="audioToggle" role="button" tabindex="0" aria-label="Toggle background nature sound" aria-pressed="false">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -54,11 +53,17 @@
 
         <h1 class="hero-title">Building experiences<br>inspired by nature</h1>
         <div class="hero-caption">
-            <p class="hero-greeting">Hi, I’m Kudrat.</p>
+            <p class="hero-greeting">Hi, I’m Kudrat. <span class="emoji">👋</span></p>
             <p>I’m a live electronic musician and artist creating music and art inspired by nature, movement, and the human journey. I work with synths, samples, rhythms, and voice to create evolving soundscapes — built live, in the moment.</p>
-            <p class="hero-signoff"><mark>Music for the planet, love, and peace.</mark></p>
+            <p class="hero-signoff"><mark>Music for the planet <span class="emoji">🌏</span>, love <span class="emoji">💚</span>, and peace <span class="emoji">☮️</span></mark></p>
         </div>
     </section>
+
+    <!-- Portrait -->
+    <figure class="portrait-band">
+        <img src="kudrat Bio image.jpg" alt="Kudrat holding a clapperboard in his studio, surrounded by art and objects, with a letterboard reading Studio Kudrat" loading="lazy">
+        <figcaption>Studio Kudrat</figcaption>
+    </figure>
 
     <!-- Music Section -->
     <section class="music-section" id="music">
@@ -100,6 +105,54 @@
             <a href="https://www.youtube.com/@StudioKudrat" target="_blank" rel="noopener">More on YouTube</a>
             <a href="https://www.instagram.com/kudrat.live/" target="_blank" rel="noopener">More on Instagram</a>
         </p>
+    </section>
+
+    <!-- On the Road Section -->
+    <section class="collab-section" id="collabs">
+        <p class="eyebrow">Collaborations</p>
+        <h2 class="section-title">On the Road</h2>
+        <div class="section-divider"></div>
+
+        <p class="section-intro">The rooms, brands, and people I’ve played with along the way — festivals, cafés, studios, and everything in between.</p>
+
+        <!-- Each tile becomes clickable as soon as data-instagram-url is filled
+             in; JS skips any tile whose URL is still empty. -->
+        <div class="collab-grid">
+            <div class="collab-tile" data-instagram-url="" data-collab-name="Config 2026">
+                <span class="collab-frame">
+                    <img src="Assets/Collabs/config.png" alt="Config 2026 by Figma" loading="lazy">
+                </span>
+                <span class="collab-name">Config 2026</span>
+            </div>
+
+            <div class="collab-tile" data-instagram-url="" data-collab-name="Social">
+                <span class="collab-frame">
+                    <img src="Assets/Collabs/social-logo.png" alt="Social" loading="lazy">
+                </span>
+                <span class="collab-name">Social</span>
+            </div>
+
+            <div class="collab-tile" data-instagram-url="" data-collab-name="Offset Projects">
+                <span class="collab-frame">
+                    <img src="Assets/Collabs/offset-programs-logo.jpg" alt="Offset Projects" loading="lazy">
+                </span>
+                <span class="collab-name">Offset Projects</span>
+            </div>
+
+            <div class="collab-tile" data-instagram-url="" data-collab-name="Shack Coffee Co.">
+                <span class="collab-frame">
+                    <img src="Assets/Collabs/shack.webp" alt="Shack Coffee Co." loading="lazy">
+                </span>
+                <span class="collab-name">Shack Coffee Co.</span>
+            </div>
+
+            <div class="collab-tile" data-instagram-url="" data-collab-name="Mool">
+                <span class="collab-frame">
+                    <img src="Assets/Collabs/mool.jpeg" alt="Mool" loading="lazy">
+                </span>
+                <span class="collab-name">Mool</span>
+            </div>
+        </div>
     </section>
 
     <!-- Tree Painting Section -->
