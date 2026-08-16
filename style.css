@@ -201,23 +201,33 @@ mark {
 }
 
 /* ============================================================
-   Portrait
+   Portrait + banner
    ============================================================ */
 
-.portrait-band {
+/* Side by side rather than stacked — two full-width slabs in a row would
+   dominate the page, and paired they read as one considered spread. */
+.image-pair {
     max-width: 1400px;
     margin: clamp(3rem, 2rem + 5vw, 7rem) auto 0;
     padding: 0 var(--gutter);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1rem, 0.6rem + 1.5vw, 2rem);
 }
 
-.portrait-band img {
+.image-pair img {
     width: 100%;
-    height: auto;
     display: block;
     border-radius: 4px;
+    /* A shared 16:9 holds the two to the same height. The banner is
+       already 16:9, so only the portrait loses a sliver top and bottom
+       — its subject is centered, and the banner's lettering runs close
+       enough to the edges that cropping it sideways would clip a word. */
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
 }
 
-.portrait-band figcaption {
+.image-pair figcaption {
     margin-top: 14px;
     font-size: var(--fs-small);
     text-transform: uppercase;
@@ -699,6 +709,11 @@ mark {
 @media (max-width: 600px) {
     .main-header {
         padding: 20px var(--gutter);
+    }
+
+    .image-pair {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
     }
 
     .hero-bg-image {
