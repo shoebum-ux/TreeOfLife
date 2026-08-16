@@ -22,7 +22,7 @@
        no separate font-size rules per breakpoint and nothing collapses to
        an unreadable 9px on a phone. */
     --fs-display: clamp(2.75rem, 1.15rem + 5.9vw, 6.25rem);
-    --fs-lead:    clamp(1.125rem, 1.02rem + 0.42vw, 1.5rem);
+    --fs-lead:    clamp(1.0625rem, 1rem + 0.32vw, 1.25rem);
     --fs-title:   clamp(1.75rem, 1.5rem + 1.0vw, 2.5rem);
     --fs-film:    clamp(1.5rem, 1.35rem + 0.6vw, 2rem);
     --fs-body:    clamp(1rem, 0.97rem + 0.14vw, 1.0625rem);
@@ -127,15 +127,29 @@ mark {
     text-wrap: balance;
 }
 
+/* Set in the sans, matching the links — it carries multiple sentences
+   more comfortably than the display serif. */
 .hero-caption {
-    font-family: var(--serif);
+    font-family: var(--sans);
     font-size: var(--fs-lead);
-    line-height: 1.45;
+    line-height: 1.65;
     color: var(--ink-soft);
     /* A measure limit keeps the line length readable instead of letting it
-       run the full 1400px. Set in rem, not ch — this serif has a narrow
+       run the full 1400px. Set in rem, not ch — the serif has a narrow
        zero, so ch units read far smaller than the actual measure. */
-    max-width: min(32rem, 100%);
+    max-width: min(37rem, 100%);
+}
+
+.hero-caption p + p {
+    margin-top: 1.15em;
+}
+
+.hero-greeting {
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.hero-signoff {
     text-wrap: balance;
 }
 
