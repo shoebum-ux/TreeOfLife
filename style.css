@@ -457,35 +457,27 @@ mark {
    Links
    ============================================================ */
 
-.music-links {
+/* Shared pill list — genres in the music section, availability in the
+   footer. Same component so the two read as one system. */
+.tag-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 32px;
-    margin-top: clamp(3rem, 2rem + 3vw, 5rem);
+    gap: 10px;
+    list-style: none;
 }
 
-.music-links a {
-    position: relative;
-    font-size: var(--fs-body);
+.tag-list li {
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--ink);
-    text-decoration: none;
-    padding-bottom: 4px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 8px 16px;
 }
 
-.music-links a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--rule);
-    transition: height 0.25s ease, background-color 0.25s ease;
-}
-
-.music-links a:hover::after {
-    height: 6px;
-    background: var(--lime);
+.genre-list {
+    margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4rem);
 }
 
 /* ============================================================
@@ -691,23 +683,8 @@ mark {
     margin-bottom: 22px;
 }
 
-/* The work Kudrat is open to — the part a promoter scans for */
-.availability {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    list-style: none;
+.footer-booking .tag-list {
     margin-bottom: 32px;
-}
-
-.availability li {
-    font-size: var(--fs-small);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--ink);
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    padding: 8px 16px;
 }
 
 .book-button {
@@ -817,11 +794,6 @@ mark {
         width: 60px;
     }
 
-    .music-links {
-        flex-direction: column;
-        gap: 16px;
-        align-items: flex-start;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
