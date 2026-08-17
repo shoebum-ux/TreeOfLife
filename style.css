@@ -269,7 +269,16 @@ mark {
     height: 1px;
     background: var(--rule);
     position: relative;
-    margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+/* The gap below the rule lives on whatever follows it, so it can be tuned
+   per case — prose wants room to breathe, pills sit closer. */
+.section-divider + * {
+    margin-top: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+.section-divider + .genre-list {
+    margin-top: clamp(1.25rem, 0.9rem + 1.1vw, 1.75rem);
 }
 
 .section-divider::before {
