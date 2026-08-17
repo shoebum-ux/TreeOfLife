@@ -418,12 +418,24 @@ class RevealPainter {
     
     handleResize() {
         if (!this.imageLoaded) return;
-        
-        // Redraw everything on resize
-        setTimeout(() => {
+
+        // Resize fires repeatedly while dragging, so debounce rather than
+        // redrawing per event. Painting stays interactive throughout — the
+        // canvases are only resized and cleared, never taken out of service.
+        clearTimeout(this.resizeTimer);
+
+        this.resizeTimer = setTimeout(() => {
             this.setupCanvases();
             this.drawInitialImage();
-        }, 100);
+            this.revealedAreas = [];
+            this.lastStrokePos = { x: -1000, y: -1000 };
+
+            // Resizing a canvas wipes it, and nothing repainted the faint
+            // tree afterwards — it stayed blank until a double-click.
+            // initialAnimationComplete is deliberately left true so hovering
+            // keeps revealing while the tree grows back in.
+            this.startInitialAnimation();
+        }, 150);
     }
 }
 

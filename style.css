@@ -553,9 +553,11 @@ mark {
    Tree Painting Section
    ============================================================ */
 
+/* Sits inside the footer now, closing the page between the booking
+   block and the copyright line. */
 .tree-painting-section {
-    padding: clamp(4rem, 2rem + 6vw, 8rem) 20px;
-    margin-top: clamp(4rem, 2rem + 6vw, 8rem);
+    padding: clamp(3rem, 1.5rem + 4vw, 5.5rem) 20px;
+    margin-top: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -752,7 +754,6 @@ mark {
 }
 
 .copyright {
-    margin-top: clamp(3rem, 2rem + 3vw, 4.5rem);
     padding-top: 24px;
     border-top: 1px solid var(--rule);
     font-size: var(--fs-small);
