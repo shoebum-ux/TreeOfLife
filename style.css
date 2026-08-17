@@ -32,6 +32,8 @@
     --fs-small:   clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
 
     --gutter: clamp(1.5rem, 0.6rem + 3.6vw, 3.75rem);
+    /* Vertical space above each top-level section, so they stay in step */
+    --section-gap: clamp(5rem, 3rem + 8vw, 11rem);
 }
 
 * {
@@ -242,7 +244,7 @@ mark {
 .music-section {
     padding: 0 var(--gutter);
     max-width: 1400px;
-    margin: clamp(5rem, 3rem + 8vw, 11rem) auto 0;
+    margin: var(--section-gap) auto 0;
 }
 
 .eyebrow {
@@ -375,7 +377,7 @@ mark {
 .collab-section {
     padding: 0 var(--gutter);
     max-width: 1400px;
-    margin: clamp(5rem, 3rem + 8vw, 11rem) auto 0;
+    margin: var(--section-gap) auto 0;
 }
 
 .section-intro {
@@ -683,7 +685,7 @@ mark {
    a border here, so it carries the same accent segment as the sections
    above and aligns to the same content column. */
 .footer {
-    margin-top: clamp(4rem, 2rem + 5vw, 7rem);
+    margin-top: var(--section-gap);
     padding: 0 var(--gutter) 48px;
 }
 
