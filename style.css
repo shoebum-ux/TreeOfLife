@@ -705,6 +705,14 @@ mark {
     color: var(--ink);
 }
 
+/* Sets expectations before the click — it opens a scheduling page, not
+   an email. */
+.book-note {
+    margin-top: 12px;
+    font-size: var(--fs-small);
+    color: var(--ink-soft);
+}
+
 .footer-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
