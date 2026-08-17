@@ -677,11 +677,99 @@ mark {
    ============================================================ */
 
 .footer {
-    text-align: center;
-    padding: 48px var(--gutter);
+    margin-top: clamp(4rem, 2rem + 5vw, 7rem);
+    padding: clamp(3rem, 2rem + 3vw, 5rem) var(--gutter) 48px;
+    border-top: 1px solid var(--rule);
+}
+
+.footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.footer-booking .section-title {
+    margin-bottom: 22px;
+}
+
+/* The work Kudrat is open to — the part a promoter scans for */
+.availability {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    margin-bottom: 32px;
+}
+
+.availability li {
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 8px 16px;
+}
+
+.book-button {
+    display: inline-block;
+    font-family: var(--grotesk);
+    font-size: var(--fs-body);
+    font-weight: 500;
+    color: var(--paper);
+    background: var(--ink);
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: 999px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.book-button:hover {
+    background: var(--lime);
+    color: var(--ink);
+}
+
+.footer-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 32px;
+    max-width: 640px;
+    margin-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+}
+
+.footer-heading {
+    font-size: var(--fs-small);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+}
+
+.footer-col p {
+    font-size: var(--fs-body);
+    margin-bottom: 6px;
+}
+
+.footer-col a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+    transition: border-color 0.25s ease;
+}
+
+.footer-col a:hover {
+    border-color: var(--accent);
+}
+
+.footer-location {
+    color: var(--ink-soft);
 }
 
 .copyright {
+    margin-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
     font-size: var(--fs-small);
     color: var(--ink-soft);
 }
