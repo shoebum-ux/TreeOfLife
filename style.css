@@ -679,10 +679,12 @@ mark {
    Footer
    ============================================================ */
 
+/* The separating rule is a .section-divider inside footer-inner rather than
+   a border here, so it carries the same accent segment as the sections
+   above and aligns to the same content column. */
 .footer {
     margin-top: clamp(4rem, 2rem + 5vw, 7rem);
-    padding: clamp(3rem, 2rem + 3vw, 5rem) var(--gutter) 48px;
-    border-top: 1px solid var(--rule);
+    padding: 0 var(--gutter) 48px;
 }
 
 .footer-inner {
