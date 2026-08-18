@@ -750,6 +750,31 @@ mark {
     margin-bottom: 6px;
 }
 
+/* Icon beside the label, aligned to its first line rather than the middle
+   of the block, so a wrapped label doesn't leave the icon floating. */
+.footer-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.footer-icon {
+    width: 17px;
+    height: 17px;
+    flex: none;
+    /* Centers the icon on the first line's box */
+    margin-top: 5px;
+    color: var(--ink-soft);
+}
+
+/* The email is wider than its column on a narrow phone; without this it
+   runs into the Follow column instead of wrapping. */
+.footer-item a,
+.footer-item span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
 .footer-col a {
     color: var(--ink);
     text-decoration: none;
@@ -801,6 +826,13 @@ mark {
     .image-pair {
         grid-template-columns: 1fr;
         gap: 2.5rem;
+    }
+
+    /* Two columns leave the email too narrow to fit on one line, and it
+       breaks mid-domain. Full width keeps it whole. */
+    .footer-details {
+        grid-template-columns: 1fr;
+        gap: 28px;
     }
 
     .hero-bg-image {
