@@ -584,7 +584,7 @@ mark {
     bottom: 0;
     background-image: url('BG TOL5.png');
     background-size: 81%;
-    background-position: center calc(100% - 150px);
+    background-position: center calc(100% - 126px);
     background-repeat: no-repeat;
     opacity: 1;
     z-index: -1;
