@@ -51,7 +51,7 @@
         <img src="Assets/5.png" alt="" class="hero-bg-image img5">
         <img src="Assets/6.png" alt="" class="hero-bg-image img6">
 
-        <h1 class="hero-title">Building experiences<br>inspired by nature</h1>
+        <h1 class="hero-title">I make plant music and experiences inspired by nature <span class="emoji">🌱</span></h1>
         <div class="hero-caption">
             <p class="hero-greeting">Hi, I’m Kudrat. <span class="emoji">👋</span></p>
             <p>I’m a live electronic musician and artist creating music and art inspired by nature, movement, and the human journey.</p>
@@ -114,6 +114,34 @@
                 <h3 class="film-title">New Beginnings</h3>
                 <p class="film-meta">Live at Himalayas</p>
             </article>
+
+            <article class="film-card">
+                <button class="film-thumb" data-video-id="Z2iAVKrkTJ0" data-video-title="Kudrat — When Leaves Sing (Live plant music at Big Aaaaart Club)" aria-label="Play When Leaves Sing, live plant music at Big Aaaaart Club">
+                    <img src="https://i.ytimg.com/vi/Z2iAVKrkTJ0/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/Z2iAVKrkTJ0/hqdefault.jpg'" alt="Kudrat performing live plant music at Big Aaaaart Club" loading="lazy">
+                    <span class="film-play" aria-hidden="true">
+                        <svg width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="32" cy="32" r="31" stroke="currentColor" stroke-width="1.25"/>
+                            <path d="M26 21L44 32L26 43V21Z" fill="currentColor"/>
+                        </svg>
+                    </span>
+                </button>
+                <h3 class="film-title">When Leaves Sing</h3>
+                <p class="film-meta">Live plant music at Big Aaaaart Club</p>
+            </article>
+
+            <article class="film-card">
+                <button class="film-thumb" data-video-id="qY1HQ67SMEA" data-video-title="Kudrat — Kissa Goes DAWless (KISSA In-Store Radio)" aria-label="Play Kissa Goes DAWless, live on KISSA In-Store Radio">
+                    <img src="https://i.ytimg.com/vi/qY1HQ67SMEA/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/qY1HQ67SMEA/hqdefault.jpg'" alt="Kudrat playing a DAWless live set on KISSA In-Store Radio" loading="lazy">
+                    <span class="film-play" aria-hidden="true">
+                        <svg width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="32" cy="32" r="31" stroke="currentColor" stroke-width="1.25"/>
+                            <path d="M26 21L44 32L26 43V21Z" fill="currentColor"/>
+                        </svg>
+                    </span>
+                </button>
+                <h3 class="film-title">Kissa Goes DAWless</h3>
+                <p class="film-meta">Live on KISSA In-Store Radio</p>
+            </article>
         </div>
     </section>
 
@@ -125,8 +153,8 @@
 
         <p class="section-intro">The rooms, brands, and people I’ve played with along the way — festivals, cafés, studios, and everything in between.</p>
 
-        <!-- Each tile becomes clickable as soon as data-instagram-url is filled
-             in; JS skips any tile whose URL is still empty. -->
+        <!-- Each tile becomes clickable once it has a data-instagram-url or a
+             YouTube data-video-id; JS skips any tile with neither. -->
         <div class="collab-grid">
             <div class="collab-tile" data-instagram-url="https://www.instagram.com/reel/DaIKN9qxXwl/" data-collab-name="Config 2026">
                 <span class="collab-frame">
@@ -161,6 +189,20 @@
                     <img src="Assets/Collabs/mool.jpeg" alt="Mool" loading="lazy">
                 </span>
                 <span class="collab-name">Mool</span>
+            </div>
+
+            <div class="collab-tile" data-video-id="Z2iAVKrkTJ0" data-video-title="Kudrat with The Art Curry" data-collab-name="The Art Curry">
+                <span class="collab-frame">
+                    <img src="Assets/Collabs/the-art-curry.png" alt="The Art Curry" loading="lazy">
+                </span>
+                <span class="collab-name">The Art Curry</span>
+            </div>
+
+            <div class="collab-tile" data-video-id="qY1HQ67SMEA" data-video-title="Kudrat with Antariksh Radio" data-collab-name="Antariksh Radio">
+                <span class="collab-frame">
+                    <img src="Assets/Collabs/antariksh.jpg" alt="Antariksh Radio" loading="lazy">
+                </span>
+                <span class="collab-name">Antariksh Radio</span>
             </div>
         </div>
     </section>

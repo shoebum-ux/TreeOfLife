@@ -453,10 +453,10 @@ class FilmLightbox {
             thumb.addEventListener('click', () => this.open(thumb));
         });
 
-        // Collab tiles only become interactive once they have a link.
-        // Tiles with an empty data-instagram-url stay inert.
+        // Collab tiles only become interactive once they have a link —
+        // an Instagram post or a YouTube video. Tiles with neither stay inert.
         document.querySelectorAll('.collab-tile').forEach(tile => {
-            if (!tile.dataset.instagramUrl) return;
+            if (!tile.dataset.instagramUrl && !tile.dataset.videoId) return;
 
             tile.classList.add('is-interactive');
             tile.setAttribute('role', 'button');
@@ -487,7 +487,7 @@ class FilmLightbox {
     open(trigger) {
         const { videoId, instagramUrl } = trigger.dataset;
         const iframe = document.createElement('iframe');
-        const isInstagram = Boolean(instagramUrl);
+        const isInstagram = !videoId && Boolean(instagramUrl);
 
         if (videoId) {
             iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
